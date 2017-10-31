@@ -1,0 +1,75 @@
+<!--
+
+    Copyright (C) 2009-2014 SAP SE or an SAP affiliate company. All rights reserved
+
+-->
+<core:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:layout="sap.ui.layout"
+	controllerName="cus.crm.myaccounts.view.overview.MarketingAttributes" xmlns:html="http://www.w3.org/1999/xhtml">
+	<Table id="list" growing="true" growingThreshold="10" growingScrollToLoad="false" items="{path: 'mktattr>/MarketingAttributes'}">
+		<columns>
+			<Column id="attributeSetCol" width="16rem" minScreenWidth="Small" demandPopin="true" visible="false"><Label text="{i18n>ATTRIBUTESET}"/></Column>
+			<Column id="attributeCol" width="16rem" minScreenWidth="Small" demandPopin="true"><Label text="{i18n>ATTRIBUTE}"/></Column>
+			<Column id="valueCol" width="16rem" minScreenWidth="Medium" demandPopin="true"><Label text="{i18n>VALUE}"/></Column>
+			<Column id="actions" width="3rem" minScreenWidth="XLarge" demandPopin="true"><Text text="{i18n>ACTIONS}"/></Column>
+		</columns>
+		<items>
+			<ColumnListItem id="columnListItem">
+				<cells>
+					<Input value="{mktattr>attributeSet}" id="attributeSetInput"
+						editable="{parts:[{path:'mktattr>eTag'}],formatter:'cus.crm.myaccounts.util.formatter.isInitial'}" showValueHelp="true"
+						valueHelpOnly="false" valueHelpRequest="onMarketingAttributeSetValueHelpSelected" showSuggestion="true" suggest="onSuggestItem"
+						suggestionItemSelected="onSuggestItemSelected" width="75%"/>
+					<Input value="{mktattr>attribute}" id="attributeInput"
+						editable="{parts:[{path:'mktattr>eTag'}],formatter:'cus.crm.myaccounts.util.formatter.isInitial'}" showValueHelp="true"
+						valueHelpOnly="false" valueHelpRequest="onMarketingAttributeValueHelpSelected" showSuggestion="true" suggest="onSuggestItem"
+						suggestionItemSelected="onSuggestItemSelected" width="75%"/>
+					<layout:VerticalLayout width="100%">
+						<!-- <core:Icon src="sap-icon://alert" color="#cc1919" size="1.3rem" visible="{parts:[{path:'mktattr>errorExists'}],formatter:'cus.crm.myaccounts.util.formatter.isNotInitial'}"/>  -->
+						<Input value="{mktattr>valueID}" visible="false"/>
+						<!-- Default Input Field -->
+						<Input id="valueInput"
+							value="{parts:[{path:'mktattr>valueID'}, {path:'mktattr>value'}, {path:'mktattr>attributeDatatype'}, {path:'mktattr>decimalPlaces'}],formatter:'cus.crm.myaccounts.util.formatter.formatMktAttrDisplayField'}"
+							editable="{parts:[{path:'mktattr>mode'}, 'constants>/modeEdit'],formatter:'cus.crm.myaccounts.util.formatter.isEqual'}"
+							visible="{parts:[{path:'mktattr>fieldType'}, 'constants>/fieldInput'],formatter:'cus.crm.myaccounts.util.formatter.isEqual'}"
+							liveChange="onInputFieldChanged" maxLength="100" width="75%"/>
+						<!-- Date Field -->
+						<DatePicker value="{path:'mktattr>dateValue', type:'sap.ui.model.type.Date', formatOptions: { style: 'medium'}}" id="valueDATEInput"
+							editable="{parts:[{path:'mktattr>mode'}, 'constants>/modeEdit'],formatter:'cus.crm.myaccounts.util.formatter.isEqual'}"
+							visible="{parts:[{path:'mktattr>fieldType'}, 'constants>/fieldDate'],formatter:'cus.crm.myaccounts.util.formatter.isEqual'}"
+							change="onDateInputFieldChanged" displayFormat="medium" width="75%"/>
+						<!-- Currency Field -->
+						<Input id="valueCURRInput"
+							value="{parts:[ {path:'mktattr>valueID'}, {path:'mktattr>decimalPlaces'}, {path:'mktattr>currency'}],formatter:'cus.crm.myaccounts.util.formatter.formatMktAttrAmountInterval'}"
+							editable="{parts:[{path:'mktattr>mode'}, 'constants>/modeEdit'],formatter:'cus.crm.myaccounts.util.formatter.isEqual'}"
+							visible="{parts:[{path:'mktattr>fieldType'}, 'constants>/fieldCurrency'],formatter:'cus.crm.myaccounts.util.formatter.isEqual'}"
+							change="onInputFieldChanged" width="75%"/>
+						<!-- Time Field -->
+						<DateTimeInput type="Time" value="{parts:[ {path:'mktattr>value'}],formatter:'cus.crm.myaccounts.util.formatter.formatMktAttrTime'}"
+							id="valueTIMEInput" editable="{parts:[{path:'mktattr>mode'}, 'constants>/modeEdit'],formatter:'cus.crm.myaccounts.util.formatter.isEqual'}"
+							visible="{parts:[{path:'mktattr>fieldType'}, 'constants>/fieldTime'],formatter:'cus.crm.myaccounts.util.formatter.isEqual'}"
+							change="onTimeInputFieldChanged" width="75%"/>
+						<!-- Select for edit mode -->
+						<!-- Used for CHAR, NUM, CURR, DATE, TIME, CHEC -->
+						<Select id="select" items="{path:'mktattr>mktAttrValues'}" selectedKey="{mktattr>valueID}" enabled="true" change="onSelectValueChanged"
+							visible="{parts:[{path:'mktattr>fieldType'}, 'constants>/fieldSelect'],formatter:'cus.crm.myaccounts.util.formatter.isEqual'}" width="75%">
+							<core:Item key="{mktattr>valueID}" text="{mktattr>value}"/>
+						</Select>
+						<Input id="valueInputVH" value="{mktattr>value}" 
+							editable="{parts:[{path:'mktattr>mode'}, 'constants>/modeEdit'],formatter:'cus.crm.myaccounts.util.formatter.isEqual'}"
+							visible="{parts:[{path:'mktattr>fieldType'}, 'constants>/fieldInputVH'],formatter:'cus.crm.myaccounts.util.formatter.isEqual'}"
+							showValueHelp="true" valueHelpOnly="true" valueHelpRequest="onMarketingValueValueHelpSelected" maxLength="100" width="75%"
+							/>
+						</layout:VerticalLayout>
+						<layout:HorizontalLayout>
+							<core:Icon src="sap-icon://edit" id="actionEdit" size="1.3rem" press="onEditMarketingAttributeClicked"
+								visible="{parts:[{path:'mktattr>mode'}, 'constants>/modeEdit'],formatter:'cus.crm.myaccounts.util.formatter.isUnequal'}"/>
+							<core:Icon src="sap-icon://save" id="actionSave" size="1.3rem" press="onSaveMarketingAttributeClicked"
+								visible="{parts:[{path:'mktattr>mode'}, 'constants>/modeEdit'],formatter:'cus.crm.myaccounts.util.formatter.isEqual'}"/>
+							<layout:HorizontalLayout class="cusMyAccountsPaddingLeft"/>
+							<core:Icon src="sap-icon://delete" id="actionDelete" size="1.3rem" press="onDeleteMarketingAttributeClicked" visible="true"/>
+						</layout:HorizontalLayout>
+					</cells>
+				</ColumnListItem>
+			</items>
+		</Table>
+	</core:View>

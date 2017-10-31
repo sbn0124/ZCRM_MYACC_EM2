@@ -1,0 +1,27 @@
+<mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m"
+	controllerName="cus.crm.myaccounts.ZCRM_MYACC_EM2.view.overview.ModulesCustom" xmlns:html="http://www.w3.org/1999/xhtml">
+	<Table id="list" mode="{device>/listMode}" growing="true" growingThreshold="10" growingScrollToLoad="false" items="{ZModules}">
+	<!--select="onModuleClicked">-->
+		<columns>
+			<Column id="moduleIDColumn" width="16rem" minScreenWidth="Small" demandPopin="true"><Label text="{i18n>ZMODULEID}"/></Column>
+			<Column id="moduleNameColumn" width="16rem" minScreenWidth="Medium" demandPopin="true"><Label text="{i18n>ZMODULE}"/></Column>
+			<!--<Column id="uniModelNameColumn" width="16rem" minScreenWidth="Medium" demandPopin="true"><Label text="{i18n>ZUNIMODULE}"/></Column>-->
+			<Column id="moduleClassificationNameColumn" width="16rem" minScreenWidth="Medium" demandPopin="true"><Label text="{i18n>ZMODULE_CLASSIFICATION}"/></Column>
+			<Column id="enrollmentColumn" width="16rem" minScreenWidth="Medium" demandPopin="true"><Label text="{i18n>ZOPPORTUNITYENROLL}"/></Column>
+			<Column id="statusColumn" width="16rem" minScreenWidth="Medium" demandPopin="true"><Label text="{i18n>ZMODULESTATUS}"/></Column>
+	
+		</columns>
+		<items>
+			<ColumnListItem id="columnListItem">
+				<cells>
+					<Text text="{moduleID}"/>
+					<Link id="zModuleLink" text="{moduleName}" target="{moduleID}" press="onModuleClicked"/>
+					<!--<Text text="{uniModuleName}"/>-->
+					<Text text="{moduleClassification}"></Text>
+					<Text text="{enrollment}"/>
+					<Text text="{path:'status', formatter: 'cus.crm.myaccounts.ZCRM_MYACC_EM2.util.formatter.showModuleStatus'}"/>
+				</cells>
+			</ColumnListItem>
+		</items>
+	</Table>
+</mvc:View>

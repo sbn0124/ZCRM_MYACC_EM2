@@ -1,0 +1,21 @@
+<core:FragmentDefinition
+  xmlns="sap.m"
+  xmlns:core="sap.ui.core"
+  xmlns:layout="sap.ui.layout"
+  xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+<SelectDialog
+        xmlns="sap.m"
+        xmlns:core="sap.ui.core"
+        title="{i18n>ZDEPARTMNET_TITLE}"
+        noDataText="{i18n>LOADING_TEXT}"
+        multiSelect=""
+        confirm="setAccount"
+        search="searchAccount"
+        liveChange="liveSearchAccount" >
+	<StandardListItem 
+			title="{fullName}"
+			app:key="{accountID}"
+			/>
+</SelectDialog>
+
+</core:FragmentDefinition>

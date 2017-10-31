@@ -1,0 +1,19 @@
+<core:FragmentDefinition
+  xmlns="sap.m"
+  xmlns:core="sap.ui.core"
+  xmlns:layout="sap.ui.layout">
+  
+  <SelectDialog
+  	title="{i18n>ZMARKETINGVALUES}"
+  	noDataText="{i18n>NO_DATA_TEXT}"
+    class="sapUiPopupWithPadding"
+    items="{MarketingValueModel>/}"
+    liveChange="onMarketingValueValueHelpSearch"
+    confirm="onMarketingValueValueHelpClose"
+    cancel="onMarketingValueValueHelpCancel"
+    growingThreshold= "20" >
+    <StandardListItem
+      title="{MarketingValueModel>value}"
+    />
+  </SelectDialog>
+</core:FragmentDefinition>

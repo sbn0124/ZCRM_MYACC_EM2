@@ -1,0 +1,42 @@
+<mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:layout="sap.ui.layout"
+	controllerName="cus.crm.myaccounts.ZCRM_MYACC_EM2.view.overview.Addresses" xmlns:html="http://www.w3.org/1999/xhtml">
+	<Table id="list" mode="{device>/listMode}" growing="true" growingThreshold="10" growingScrollToLoad="false" items="{Addresses}">
+		<!--select="onAddressClicked">-->
+		<columns>
+			<!--<Column id="zContactIDColumn" width="16rem" minScreenWidth="Small" demandPopin="true"><Label text="{i18n>ZACCOUNT_NAME}"/></Column>-->
+			<Column id="zAddressTypeColumn" width="16rem" minScreenWidth="Medium" demandPopin="true"><Label text="{i18n>ZADDRESS_TYPE}"/></Column>
+			<Column id="zAddressNumberColumn" visible="false"></Column>
+			<Column id="zAddressColumn" width="16rem" minScreenWidth="Medium" demandPopin="true"><Label text="{i18n>ADDRESS}"/></Column>
+			<Column id="zTeleAddressColumn" width="16rem" minScreenWidth="Medium" demandPopin="true"><Label text=""/></Column>
+		</columns>
+		<items>
+			<ColumnListItem id="columnListItem">
+				<cells>
+					<!--<Link text="{path:'contactID',formatter:'cus.crm.myaccounts.ZCRM_MYACC_EM2.util.formatter.formatContactID'}" />-->
+					<Text text="{path:'zzAddrKind',formatter:'cus.crm.myaccounts.ZCRM_MYACC_EM2.util.formatter.formatAddrKind'}"/>
+					<Text text="{addressNumber}"/>
+					<VBox>
+						<items>
+							<Label text="{parts:[{path:'street'}, {path:'houseNumber'}]}"/>
+							<Label text="{parts:[{path:'postcode'}, {path:'city'}]}"/>
+							<Label text="{country}"/>
+						</items>
+						<layoutData>
+							<layout:GridData span="L12 M12 S12"/>
+						</layoutData>
+					</VBox>
+					<VBox>
+						<items>
+							<Label text="{phone}"/>
+							<Label text="{email}"/>
+							<Link href="{path:'website', formatter:'cus.crm.myaccounts.util.formatter.websiteURL'}" target="_blank" text="{website}"/>
+						</items>
+						<layoutData>
+							<layout:GridData span="L12 M12 S12"/>
+						</layoutData>
+					</VBox>
+				</cells>
+			</ColumnListItem>
+		</items>
+	</Table>
+</mvc:View>

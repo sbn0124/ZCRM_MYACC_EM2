@@ -1,0 +1,114 @@
+<core:FragmentDefinition xmlns:core="sap.ui.core" xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc" xmlns:form="sap.ui.layout.form"
+	xmlns:layout="sap.ui.layout" xmlns:html="http://www.w3.org/1999/xhtml">
+<!--	<form:FormContainer xmlns:form="sap.ui.layout.form" id="formAll_info">
+		<form:formElements>
+			<form:FormElement id="zterritory_form">
+				<form:label>
+					<Label xmlns="sap.m" id="zterritory_label" text="{i18n&gt;ZTERRITORY}"/>
+				</form:label>
+				<form:fields>
+					<Text xmlns="sap.m" id="zterritory" text="{ZCustomFields/zTerritoryDesc}"/>
+				</form:fields>
+			</form:FormElement>			
+			<form:FormElement id="account_type_form">
+				<form:label>
+					<Label xmlns="sap.m" id="account_type_label" text="{i18n&gt;ZACCOUNT_TYPE}"/>
+				</form:label>
+				<form:fields>
+					<Text xmlns="sap.m" id="account_type" text="{ZCustomFields/zdescription}"/>
+				</form:fields>
+			</form:FormElement>
+			<form:FormElement id="account_subtype_form">
+				<form:label>
+					<Label xmlns="sap.m" id="account_subtype_label" text="{i18n&gt;ZACCOUNT_SUBTYPE}"/>
+				</form:label>
+				<form:fields>
+					<Text xmlns="sap.m" id="account_subtype" text="{ZCustomFields/zsubDescription}"/>
+				</form:fields>
+			</form:FormElement>
+		</form:formElements>
+	</form:FormContainer>-->
+	<form:FormContainer xmlns:form="sap.ui.layout.form" id="formCorporate_info"
+		visible="{parts:['category', 'constants>/accountCategoryPerson'], formatter: 'cus.crm.myaccounts.util.formatter.isUnequal'}">
+		<form:formElements>
+	<!--		<form:FormElement id="account_3type_form">
+				<form:label>
+					<Label xmlns="sap.m" id="account_3type_label" text="{i18n&gt;ZACCOUNT_THIRDTYPE}"/>
+				</form:label>
+				<form:fields>
+					<Text xmlns="sap.m" id="zacc3rdtype" text="{ZCustomFields/zacc3rdtypeDescr}"/>
+				</form:fields>
+			</form:FormElement>
+			<form:FormElement id="account_status_form">
+				<form:label>
+					<Label xmlns="sap.m" id="account_status_label" text="{i18n&gt;ZACCOUNT_STATUS}"/>
+				</form:label>
+				<form:fields>
+					<Text xmlns="sap.m" id="zaccstatus" text="{ZCustomFields/zaccStatusDescr}"/>
+				</form:fields>
+			</form:FormElement>
+			<form:FormElement id="account_insvariations_form">
+				<form:label>
+					<Label xmlns="sap.m" id="insvariations_label" text="{i18n&gt;ZINS_VARIATIONS}"/>
+				</form:label>
+				<form:fields>
+					<Text xmlns="sap.m" id="insvariations" text="{ZCustomFields/zinsVariations}"/>
+				</form:fields>
+			</form:FormElement>-->
+			<form:FormElement id="enrollment_form">
+				<form:label>
+					<Label xmlns="sap.m" id="enrollment_label" text="{i18n&gt;ZTOTAL_ENROLMENT}"/>
+				</form:label>
+				<form:fields>
+					<Text xmlns="sap.m" id="enrollment" text="{ZCustomFields/zenrollment}"/>
+				</form:fields>
+			</form:FormElement>
+		</form:formElements>
+	</form:FormContainer>
+	<!--<form:FormContainer xmlns:form="sap.ui.layout.form" id="formIndividual_info"
+		visible="{parts:['category', 'constants>/accountCategoryPerson'], formatter: 'cus.crm.myaccounts.util.formatter.isEqual'}">
+		<form:formElements>
+			<form:FormElement id="account_sam_status_form">
+				<form:label>
+					<Label xmlns="sap.m" id="sampling_status_label" text="{i18n&gt;ZSAMPLING_STATUS}"/>
+				</form:label>
+				<form:fields>
+					<Text xmlns="sap.m" id="sampling_status"
+						text="{path:'zSamplingStatus', formatter:'cus.crm.myaccounts.ZCRM_MYACC_EM2.util.formatter.formatSamplingStatus'}"/>
+				</form:fields>
+			</form:FormElement>
+			<form:FormElement id="account_ind_status_form">
+				<form:label>
+					<Label xmlns="sap.m" id="account_ind_status_label" text="{i18n&gt;ZACCOUNT_STATUS}"/>
+				</form:label>
+				<form:fields>
+					<Text xmlns="sap.m" id="zaccindstatus" text="{path: 'zAccountStatus', formatter: 'cus.crm.myaccounts.ZCRM_MYACC_EM2.util.formatter.formatAccIndStatus'}"/>
+				</form:fields>
+			</form:FormElement>
+			<form:FormElement id="zdepartment_form">
+				<form:label>
+					<Label xmlns="sap.m" id="zdepartment_label" text="{i18n&gt;ZDEPARTMENT}"/>
+				</form:label>
+				<form:fields>
+					<Text xmlns="sap.m" id="zdepartment_zstatus" text="{ZCustomFields/zDepartmentDesc}"/>
+				</form:fields>
+			</form:FormElement>
+			<form:FormElement id="contact_source_form">
+				<form:label>
+					<Label xmlns="sap.m" id="contact_source_label" text="{i18n&gt;ZCONTACT_SOURCE}"/>
+				</form:label>
+				<form:fields>
+					<Text xmlns="sap.m" id="contact_source" text="{ZCustomFields/zContactSource}"/>
+				</form:fields>
+			</form:FormElement>
+			<form:FormElement id="other_function_form">
+				<form:label>
+					<Label xmlns="sap.m" id="other_function_label" text="{i18n&gt;ZOTHER_FUNCTION}"/>
+				</form:label>
+				<form:fields>
+					<Text xmlns="sap.m" id="other_function" text="{ZCustomFields/zOtherFunctionDesc}"/>
+				</form:fields>
+			</form:FormElement>			
+		</form:formElements>
+	</form:FormContainer>-->
+</core:FragmentDefinition>

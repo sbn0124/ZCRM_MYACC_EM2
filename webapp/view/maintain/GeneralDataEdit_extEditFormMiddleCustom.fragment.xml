@@ -1,0 +1,164 @@
+<core:FragmentDefinition xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:layout="sap.ui.layout"
+	xmlns:form="sap.ui.layout.form" xmlns:html="http://www.w3.org/1999/xhtml">
+	
+<!--	<form:FormContainer xmlns:form="sap.ui.layout.form" id="formAllKindsofAccount_info">
+		<form:formElements>
+			<form:FormElement id="zterritory_form">
+				<form:label>
+					<Label xmlns="sap.m" id="zterritory_label" text="{i18n&gt;ZTERRITORY}"/>
+				</form:label>
+				<form:fields>
+					<Input xmlns="sap.m" id="ZCustomFields.zTerritoryDescInput" value="{ZCustomFields/zTerritoryDesc}" 
+					showValueHelp="true" valueHelpOnly="true" type="Text" valueHelpRequest="onTerritoryValueHelpSelected" enabled="false"/>
+					<Input xmlns="sap.m" id="ZCustomFields.zTerritoryInput" visible="false" value="{ZCustomFields/zTerritory}" 
+					showValueHelp="true" valueHelpOnly="true" valueHelpRequest="onTerritoryValueHelpSelected" enabled="false" />
+				</form:fields>
+			</form:FormElement>
+			<form:FormElement id="account_type_form">
+				<form:label>
+					<Label xmlns="sap.m" id="account_type_label" text="{i18n&gt;ZACCOUNT_TYPE}" required="true" />
+				</form:label>
+				<form:fields>
+					<Input id="ZCustomFields.zdescriptionInput" value="{ZCustomFields/zdescription}" type="Text" placeholder="" enabled="true" editable="true"
+						showValueHelp="true" valueHelpOnly="false" valueHelpRequest="onAccountTypeValueHelpSelected" showSuggestion="true"
+						suggestionItemSelected="onAccountTypeSuggestItemSelected" liveChange="onAccountTypeInputFieldChanged" visible="true"/>
+				</form:fields>
+			</form:FormElement>
+			<form:FormElement id="ZCustomFields.ztypeIDform">
+				<form:fields>
+					<Input id="ZCustomFields.ztypeIDInput" value="{ZCustomFields/ztypeID}" type="Text" visible="false"/>
+				</form:fields>
+			</form:FormElement>
+			<form:FormElement id="account_subtype_form">
+				<form:label>
+					<Label xmlns="sap.m" id="account_subtype_label" text="{i18n&gt;ZACCOUNT_SUBTYPE}" required="true" />
+				</form:label>
+				<form:fields>
+					<Input id="ZCustomFields.zsubDescriptionInput" value="{ZCustomFields/zsubDescription}" type="Text" placeholder="" enabled="true" editable="true"
+						showValueHelp="true" valueHelpOnly="false" valueHelpRequest="onAccountSubtypeValueHelpSelected" showSuggestion="true"
+						suggestionItemSelected="onAccountSubtypeSuggestItemSelected" liveChange="onSubtypeTypeInputFieldChanged" visible="true"/>
+				</form:fields>
+			</form:FormElement>
+			<form:FormElement id="ZCustomFields.zsubtypeIDform">
+				<form:fields>
+					<Input id="ZCustomFields.zsubtypeIDInput" value="{ZCustomFields/zsubtypeID}" type="Text" visible="false"/>
+				</form:fields>
+			</form:FormElement>
+			</form:formElements>
+	</form:FormContainer>-->
+
+	<form:FormContainer xmlns:form="sap.ui.layout.form" id="formCorporate_info"
+		visible="{parts:['category', 'constants>/accountCategoryPerson'], formatter: 'cus.crm.myaccounts.util.formatter.isUnequal'}">
+		<form:formElements>
+			<!--<form:FormElement id="account_3type_form">
+				<form:label>
+					<Label xmlns="sap.m" id="account_3type_label" text="{i18n&gt;ZACCOUNT_THIRDTYPE}"/>
+				</form:label>
+				<form:fields>
+					<Input id="ZCustomFields.zacc3rdtypeDescrInput" value="{ZCustomFields/zacc3rdtypeDescr}" type="Text" placeholder="" enabled="true" editable="true"
+						showValueHelp="true" valueHelpOnly="false" valueHelpRequest="onAccount3typeValueHelpSelected" showSuggestion="true"
+						suggestionItemSelected="onAccount3typeSuggestItemSelected" liveChange="on3typeTypeInputFieldChanged" visible="true"/>
+				</form:fields>
+			</form:FormElement>
+			<form:FormElement id="ZCustomFields.zacc3rdtypeIDform">
+				<form:fields>
+					<Input id="ZCustomFields.zacc3rdtypeInput" value="{ZCustomFields/zacc3rdtype}" type="Text" visible="false"/>
+				</form:fields>
+			</form:FormElement>		
+			<form:FormElement id="account_status_form">
+				<form:label>
+					<Label xmlns="sap.m" id="account_status_label" text="{i18n&gt;ZACCOUNT_STATUS}"/>
+				</form:label>
+				<form:fields>
+					<Select id="ZCustomFields.zaccStatusDescrSelect" change="onAccStatusFieldChanged"
+						items="{CustAccountStatus>/results}" selectedKey="{ZCustomFields/zaccStatus}" >
+						<core:Item key="{CustAccountStatus>zstatusID}" text="{CustAccountStatus>zstatus}"/>
+					</Select>
+				</form:fields>
+			</form:FormElement>
+			<form:FormElement id="ZCustomFields.zaccstatusform">
+				<form:fields>
+					<Input id="ZCustomFields.zaccStatusInput" value="{ZCustomFields/zaccStatus}" type="Text" visible="false"/>
+				</form:fields>
+			</form:FormElement>
+			
+			<form:FormElement id="account_insvariations_form">
+				<form:label>
+					<Label xmlns="sap.m" id="insvariations_label" text="{i18n&gt;ZINS_VARIATIONS}"/>
+				</form:label>
+				<form:fields>
+					<Input id="ZCustomFields.zinsVariationsInput" value="{ZCustomFields/zinsVariations}" maxLength="40" liveChange="onName1InputFieldChanged"/>
+				</form:fields>
+			</form:FormElement>-->
+			<form:FormElement id="enrollment_form">
+				<form:label>
+					<Label xmlns="sap.m" id="enrollment_label" text="{i18n&gt;ZTOTAL_ENROLMENT}"/>
+				</form:label>
+				<form:fields>
+					<Input id="ZCustomFields.zenrollmentInput" value="{ZCustomFields/zenrollment}" maxLength="40" liveChange="onName1InputFieldChanged"/>
+				</form:fields>
+			</form:FormElement>
+		</form:formElements>
+	</form:FormContainer>
+	
+	<form:FormContainer xmlns:form="sap.ui.layout.form" id="formIndividual_info"
+		visible="{parts:['category', 'constants>/accountCategoryPerson'], formatter: 'cus.crm.myaccounts.util.formatter.isEqual'}">
+		<form:formElements>
+			<form:FormElement id="account_sam_status_form">
+				<form:label>
+					<Label xmlns="sap.m" id="sampling_status_label" text="{i18n&gt;ZSAMPLING_STATUS}"/>
+				</form:label>
+				<form:fields>
+					<Select id="zSamplingStatusInput" 
+						items="{ZCustomizing>/ZSampleStatus}" selectedKey="{zSamplingStatus}" >
+						<core:Item key="{ZCustomizing>status}" text="{ZCustomizing>description}"/>
+					</Select>
+				</form:fields>
+			</form:FormElement>
+			<form:FormElement id="account_ind_status_form">
+				<form:label>
+					<Label xmlns="sap.m" id="ind_status_label" text="{i18n&gt;ZACCOUNT_STATUS}"/>
+				</form:label>
+				<form:fields>
+					<Select id="zAccountStatusInput" 
+						items="{ZCustomizing>/ZAccIndStatus}" selectedKey="{zAccountStatus}" >
+						<core:Item key="{ZCustomizing>zstatusID}" text="{ZCustomizing>zstatus}"/>
+					</Select>
+				</form:fields>
+			</form:FormElement>			
+			<form:FormElement id="contact_source_form">
+				<form:label>
+					<Label xmlns="sap.m" id="contact_source_label" text="{i18n&gt;ZCONTACT_SOURCE}"/>
+				</form:label>
+				<form:fields>
+					<Input xmlns="sap.m" id="contact_source" value="{ZCustomFields/zContactSource}" editable="false"/>
+				</form:fields>
+			</form:FormElement>
+			<form:FormElement id="zdepartment_form">
+				<form:label>
+					<Label xmlns="sap.m" id="zdepartment_label" text="{i18n&gt;ZDEPARTMENT}"/>
+				</form:label>
+				<form:fields>
+					<Input xmlns="sap.m" id="ZCustomFields.zDepartmentDescInput" value="{ZCustomFields/zDepartmentDesc}"
+					valueHelpRequest="showAccountF4" showValueHelp="true"/>
+				</form:fields>
+				<form:fields>
+					<Input xmlns="sap.m" id="ZCustomFields.zDepartmentInput" value="{ZCustomFields/zDepartment}"
+					visible="false"/>
+				</form:fields>
+			</form:FormElement>
+			<form:FormElement id="other_function_form">
+				<form:label>
+					<Label xmlns="sap.m" id="other_function_label" text="{i18n&gt;ZOTHER_FUNCTION}"/>
+				</form:label>
+				<form:fields>
+					<Select id="ZCustomFields.zOtherFunctionInput" items="{ZCustomizing>/ZOtherFunction}" selectedKey="{ZCustomFields/zOtherFunction}">
+						<core:Item key="{ZCustomizing>function}" text="{ZCustomizing>description}"/>
+					</Select>
+				</form:fields>
+			</form:FormElement>			
+			
+		</form:formElements>
+	</form:FormContainer>
+	
+</core:FragmentDefinition>

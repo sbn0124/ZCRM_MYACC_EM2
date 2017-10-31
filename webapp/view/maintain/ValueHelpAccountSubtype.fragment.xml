@@ -1,0 +1,23 @@
+<!--
+
+    CUSTOM DEVELOPMENT
+
+-->
+<core:FragmentDefinition
+  xmlns="sap.m"
+  xmlns:core="sap.ui.core"
+  xmlns:layout="sap.ui.layout">
+  
+  <SelectDialog
+  	title="{i18n>ZACCOUNT_SUBTYPE}"
+    class="sapUiPopupWithPadding"
+    items="{SubTypeModel>/results}"
+    liveChange="onAccountSubtypeValueHelpSearch"
+    confirm="onAccountSubtypeValueHelpClose"
+    cancel="onAccountSubtypeValueHelpCancel">
+    <StandardListItem
+        title="{SubTypeModel>zdescription}"  
+     />
+  </SelectDialog>
+   
+</core:FragmentDefinition>

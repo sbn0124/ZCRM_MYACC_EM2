@@ -1,0 +1,166 @@
+<!--
+
+    Copyright (C) 2009-2014 SAP SE or an SAP affiliate company. All rights reserved
+
+-->
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:form="sap.ui.layout.form" xmlns:layout="sap.ui.layout">
+	<form:FormElement id="MainAddress.adrVal">
+		<form:label>
+			<Label text="{i18n>ADRVAL}" id="MainAddress.adrValLabel" width="100%"/>
+		</form:label>
+		<form:fields>
+			<Switch state="{Zznoaddrvalidation}" id="MainAddress.ZznoaddrvalidationInput">
+				<layoutData>
+					<FlexItemData growFactor="1"/>
+				</layoutData>
+			</Switch>
+		</form:fields>
+	</form:FormElement>
+	<form:FormElement id="MainAddress.country">
+		<form:label>
+			<Label text="{i18n>COUNTRY}" id="MainAddress.countryLabel" width="100%"/>
+		</form:label>
+		<form:fields>
+			<Input id="MainAddress.countryInput" value="{MainAddress/country}" type="Text" placeholder="" enabled="true" editable="true"
+				showValueHelp="true" valueHelpOnly="false" valueHelpRequest="onCountryValueHelpSelected" showSuggestion="true" suggest="onCountrySuggest"
+				suggestionItemSelected="onCountrySuggestItemSelected" liveChange="onCountryInputFieldChanged"/>
+		</form:fields>
+	</form:FormElement>
+	<form:FormElement id="MainAddress.countryID">
+		<form:fields>
+			<Input id="MainAddress.countryIDInput" value="{MainAddress/countryID}" type="Text" visible="false"/>
+		</form:fields>
+	</form:FormElement>
+	<form:FormElement id="MainAddress.region">
+		<form:label>
+			<Label text="{i18n>REGION}" id="MainAddress.regionLabel" width="100%"/>
+		</form:label>
+		<form:fields>
+			<Input id="MainAddress.regionInput" value="{MainAddress/region}" type="Text" placeholder="" editable="true" showValueHelp="true"
+				valueHelpOnly="false" valueHelpRequest="onRegionValueHelpSelected" showSuggestion="true" suggest="onRegionSuggest"
+				suggestionItemSelected="onRegionSuggestItemSelected" liveChange="onRegionInputFieldChanged"/>
+		</form:fields>
+	</form:FormElement>
+	<form:FormElement id="MainAddress.regionID">
+		<form:fields>
+			<Input id="MainAddress.regionIDInput" value="{MainAddress/regionID}" type="Text" visible="false"/>
+		</form:fields>
+	</form:FormElement>
+	<form:FormElement id="MainAddress.street">
+		<form:label>
+			<Label text="{parts:[{path:'i18n>STREET'},{path:'i18n>HOUSE_NUMBER'}], formatter: 'cus.crm.myaccounts.util.formatter.sleshSeparator'}"
+				id="MainAddress.streetLabel" width="100%" />
+		</form:label>
+		<form:fields>
+			<Input value="{MainAddress/street}" maxLength="40" id="MainAddress.streetInput" liveChange="onInputFieldChanged">
+				<layoutData>
+					<layout:GridData span="L4 M4 S9"/>
+				</layoutData>
+			</Input>
+			<Input value="{MainAddress/houseNumber}" maxLength="40" id="MainAddress.houseNumberInput" liveChange="onInputFieldChanged">
+				<layoutData>
+					<layout:GridData span="L1 M2 S3"/>
+				</layoutData>
+			</Input>
+		</form:fields>
+	</form:FormElement>
+//  STREET 2
+
+	<form:FormElement id="MainAddress.street2">
+		<form:label>
+			<Label text="{i18n>STREET2}" id="MainAddress.street2label" width="100%"/>
+		</form:label>
+		<form:fields>
+			<Input id="MainAddress.street2Input" value="{MainAddress/street2}" maxLength="40" type="Text" placeholder="" editable="true" 
+			liveChange="onInputFieldChanged"/>
+			
+		</form:fields>
+	</form:FormElement>
+	
+//
+	
+	<form:FormElement id="MainAddress.postcode">
+		<form:label>
+			<Label text="{parts:[{path:'i18n>POSTAL_CODE'},{path:'i18n>CITY'}], formatter: 'cus.crm.myaccounts.util.formatter.sleshSeparator'}"
+				id="MainAddress.postcodeLabel" width="100%" />
+		</form:label>
+		<form:fields>
+			<Input value="{MainAddress/postcode}" maxLength="40" id="MainAddress.postcodeInput" liveChange="onInputFieldChanged">
+				<layoutData>
+					<layout:GridData span="L1 M2 S5"/>
+				</layoutData>
+			</Input>
+			<Input value="{MainAddress/city}" maxLength="40" id="MainAddress.cityInput" liveChange="onInputFieldChanged">
+				<layoutData>
+					<layout:GridData span="L4 M4 S7"/>
+				</layoutData>
+			</Input>
+		</form:fields>
+	</form:FormElement>
+// District, PO. Box, Language	
+
+	<form:FormElement id="MainAddress.district">
+		<form:label>
+			<Label text="{i18n>DISTRICT}" id="MainAddress.districtlabel" width="100%"/>
+		</form:label>
+		<form:fields>
+			<Input id="MainAddress.districtInput" value="{MainAddress/district}" maxLength="40" type="Text" placeholder="" editable="true" 
+			liveChange="onInputFieldChanged"/>
+		</form:fields>
+	</form:FormElement>
+
+	<form:FormElement id="MainAddress.po_box">
+		<form:label>
+			<Label text="{i18n>PO_BOX}" id="MainAddress.po_boxlabel" width="100%"/>
+		</form:label>
+		<form:fields>
+			<Input id="MainAddress.po_boxInput" value="{MainAddress/po_box}" maxLength="10" type="Text" placeholder="" editable="true" 
+			liveChange="onInputFieldChanged"/>
+		</form:fields>
+	</form:FormElement>
+
+	<form:FormElement id="MainAddress.language">
+		<form:label>
+			<Label text="{i18n>LANGUAGE}" id="MainAddress.languagelabel" width="100%"/>
+		</form:label>
+		<form:fields>
+			<Input id="MainAddress.languageInput" value="{MainAddress/language}" maxLength="10" type="Text" placeholder="" editable="true" 
+			liveChange="onInputFieldChanged"/>
+		</form:fields>
+	</form:FormElement>
+
+//	
+	<form:FormElement id="MainAddress.mobilePhone"
+		visible="{parts:['category', 'constants>/accountCategoryPerson'], formatter: 'cus.crm.myaccounts.util.formatter.isEqual'}">
+		<form:label>
+			<Label text="{i18n>MOBILE}" id="MainAddress.mobilePhoneLabel" width="100%"/>
+		</form:label>
+		<form:fields>
+			<Input value="{MainAddress/mobilePhone}" maxLength="40" id="MainAddress.mobilePhoneInput" liveChange="onInputFieldChanged"/>
+		</form:fields>
+	</form:FormElement>
+	<form:FormElement id="MainAddress.phone">
+		<form:label>
+			<Label text="{i18n>PHONE}" id="MainAddress.phoneLabel" width="100%"/>
+		</form:label>
+		<form:fields>
+			<Input value="{MainAddress/phone}" maxLength="40" id="MainAddress.phoneInput" liveChange="onInputFieldChanged"/>
+		</form:fields>
+	</form:FormElement>
+	<form:FormElement id="MainAddress.email">
+		<form:label>
+			<Label text="{i18n>EMAIL}" id="MainAddress.emailLabel" width="100%"/>
+		</form:label>
+		<form:fields>
+			<Input value="{MainAddress/email}" maxLength="40" id="MainAddress.emailInput" liveChange="onInputFieldChanged"/>
+		</form:fields>
+	</form:FormElement>
+	<form:FormElement id="MainAddress.website">
+		<form:label>
+			<Label text="{i18n>WEBSITE}" id="MainAddress.websiteLabel" width="100%"/>
+		</form:label>
+		<form:fields>
+			<Input value="{MainAddress/website}" maxLength="40" id="MainAddress.websiteInput" liveChange="onInputFieldChanged"/>
+		</form:fields>
+	</form:FormElement>
+</core:FragmentDefinition>

@@ -1,0 +1,23 @@
+<!--
+
+    CUSTOM DEVELOPMENT
+
+-->
+<core:FragmentDefinition
+  xmlns="sap.m"
+  xmlns:core="sap.ui.core"
+  xmlns:layout="sap.ui.layout">
+  
+  <SelectDialog
+  	title="{i18n>ZACCOUNT_THIRDTYPE}"
+    class="sapUiPopupWithPadding"
+    items="{ThirdTypeModel>/results}"
+    liveChange="onAccount3typeValueHelpSearch"
+    confirm="onAccount3typeValueHelpClose"
+    cancel="onAccount3typeValueHelpCancel">
+    <StandardListItem
+        title="{ThirdTypeModel>zacc3rdtype}" 
+     />
+  </SelectDialog>
+   
+</core:FragmentDefinition>

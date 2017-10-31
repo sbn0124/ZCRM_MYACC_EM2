@@ -1,0 +1,50 @@
+<core:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:layout="sap.ui.layout" xmlns:form="sap.ui.layout.form"
+	xmlns:html="http://www.w3.org/1999/xhtml" xmlns:u="sap.uxap" controllerName="cus.crm.myaccounts.ZCRM_MYACC_EM2.view.maintain.CreateAddress">
+	<Page title="{i18n>ZADD_ADDRESS_TITLE}" showNavButton="true" navButtonPress="onNavBack">
+		<content>
+			<layout:Grid defaultSpan="L12 M12 S12" width="auto">
+				<layout:content>
+					<core:ExtensionPoint name="extEditForm">
+						<form:Form class="sapUiFormEdit sapUiFormEdit-CTX">
+							<form:layout>
+								<form:ResponsiveGridLayout xmlns:form="sap.ui.layout.form" labelSpanL="4" labelSpanM="4" emptySpanL="3" emptySpanM="2" columnsL="1"
+									columnsM="1" class="editableForm"></form:ResponsiveGridLayout>
+							</form:layout>
+							<form:formContainers>
+								<form:FormContainer title="{i18n>ADDRESS}" id="editFormAddress" visible="false">
+									<form:formElements>
+										<core:Fragment id="addressFragment" fragmentName="cus.crm.myaccounts.ZCRM_MYACC_EM2.view.maintain.address.DefaultAddress" type="XML"/>
+										<core:ExtensionPoint name="extEditFormAddress"/>
+									</form:formElements>
+								</form:FormContainer>
+								<form:FormContainer title="{i18n>ADDRESS}" id="editFormAddressUS" visible="false">
+									<form:formElements>
+										<core:Fragment id="addressFragmentUS" fragmentName="cus.crm.myaccounts.ZCRM_MYACC_EM2.view.maintain.address.USAddress" type="XML"/>
+									</form:formElements>
+								</form:FormContainer>
+								<form:FormContainer title="{i18n>ADDRESS}" id="editFormAddressJP" visible="false">
+									<form:formElements>
+										<core:Fragment id="addressFragmentJP" fragmentName="cus.crm.myaccounts.ZCRM_MYACC_EM2.view.maintain.address.JPAddress" type="XML"/>
+									</form:formElements>
+								</form:FormContainer>
+								<form:FormContainer title="{i18n>ADDRESS}" id="editFormAddressGB" visible="false">
+									<form:formElements>
+										<core:Fragment id="addressFragmentGB" fragmentName="cus.crm.myaccounts.ZCRM_MYACC_EM2.view.maintain.address.GBAddress" type="XML"/>
+									</form:formElements>
+								</form:FormContainer>
+								<core:ExtensionPoint name="extEditFormBottom"/>
+							</form:formContainers>
+						</form:Form>
+					</core:ExtensionPoint>
+				</layout:content>
+			</layout:Grid>
+		</content>
+		<footer>
+			<OverflowToolbar>
+				<ToolbarSpacer/>
+				<Button type="Default" text="Save" press="onSaveButtonPressed" icon="sap-icon://save"/>
+				<Button type="Default" text="Cancel" press="onNavBack" icon="sap-icon://cancel"/>
+			</OverflowToolbar>
+		</footer>
+	</Page>
+</core:View>

@@ -1,0 +1,21 @@
+<core:FragmentDefinition xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:layout="sap.ui.layout"
+	xmlns:form="sap.ui.layout.form" xmlns:html="http://www.w3.org/1999/xhtml">
+	<form:FormElement xmlns:form="sap.ui.layout.form" id="MainAddress.zRoomNumber"
+	visible="{parts:['category', 'constants>/accountCategoryPerson'], formatter: 'cus.crm.myaccounts.util.formatter.isEqual'}">
+		<form:label>
+			<Label  id="MainAddress.zRoomNumberLabel" text="{i18n&gt;ZACCOUNT_ROOM}"/>
+		</form:label>
+		<form:fields>
+			<Input id="addressFragment--MainAddress.zRoomNumberInput" value="{MainAddress/zRoomNumber}" liveChange="onInputFieldChanged"/>
+		</form:fields>
+	</form:FormElement>
+		<form:FormElement xmlns:form="sap.ui.layout.form" id="MainAddress.zBuilding"
+		visible="{parts:['category', 'constants>/accountCategoryPerson'], formatter: 'cus.crm.myaccounts.util.formatter.isEqual'}">
+		<form:label>
+			<Label  id="MainAddress.zBuildingLabel" text="{i18n&gt;ZACCOUNT_BUILDING}"/>
+		</form:label>
+		<form:fields>
+			<Input id="addressFragment--MainAddress.zBuildingInput" value="{MainAddress/zBuilding}" liveChange="onInputFieldChanged"/>
+		</form:fields>
+	</form:FormElement>
+</core:FragmentDefinition>

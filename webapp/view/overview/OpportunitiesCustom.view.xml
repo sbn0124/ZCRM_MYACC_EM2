@@ -1,0 +1,81 @@
+<!--
+
+    Copyright (C) 2009-2014 SAP SE or an SAP affiliate company. All rights reserved
+
+-->
+<core:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:layout="sap.ui.layout"
+	controllerName="cus.crm.myaccounts.view.overview.Opportunities" xmlns:html="http://www.w3.org/1999/xhtml">
+	<Table id="list" mode="{device>/listMode}" growing="true" growingThreshold="10" growingScrollToLoad="false"
+		items="{path:'Opportunities', parameters: {expand: 'MainContact,MainContact/Photo'}}">
+		<columns>
+			<Column id="descriptionCol" width="15%" minScreenWidth="Small" demandPopin="true"><Label text="{i18n>DESCRIPTION}"/></Column>
+			<Column id="mainContactCol" width="20%" minScreenWidth="Medium" demandPopin="true"><Label text="{i18n>ZLECTURER}"/></Column>
+			<Column id="departmentCol" width="15%" minScreenWidth="Large" demandPopin="true"><Label text="{i18n>ZDEPARTMENT}"/></Column>
+			<Column id="volumeCol" width="5%" minScreenWidth="Large" demandPopin="true"><Label text="{i18n>VOLUME}"/></Column>
+			<Column id="probabilityCol" width="5%" minScreenWidth="Large" demandPopin="true"><Label text="{i18n>PROBABILITY}"/></Column>
+			<Column id="opportunityTypeCol" width="5%" minScreenWidth="Large" demandPopin="true"><Label text="{i18n>ZOPPTYPE}"/></Column>
+			<Column id="moduleEnrolmentCol" width="5%" minScreenWidth="Large" demandPopin="true"><Label text="{i18n>ZOPPORTUNITYENROLL}"/></Column>
+			<Column id="closingDate" width="8%" minScreenWidth="XLarge" demandPopin="true"><Label text="{i18n>CLOSE_BY}"/></Column>
+			<Column id="statusCol" width="8%" minScreenWidth="XXLarge" demandPopin="true"><Label text="{i18n>STATUS}"/></Column>
+			<Column id="productCol"  minScreenWidth="Large" demandPopin="true"><Label text="{i18n>ZOPPPRODUCT}"/></Column>
+
+			<!-- <Column id="actions" width="3rem" minScreenWidth="Desktop" demandPopin="true"><Text text="{i18n>ACTIONS}" /></Column> -->
+		</columns>
+		<items>
+			<ColumnListItem id="columnListItem">
+				<cells>
+					<VBox>
+						<items>
+							<Link text="{description}" press="onOpportunityDescriptionLinkClicked"/>
+							<Label text="{objectId}"/>
+						</items>
+						<layoutData>
+							<layout:GridData span="L12 M12 S12"/>
+						</layoutData>
+					</VBox>
+					<layout:Grid class="gridMarginTop" defaultSpan="L3 M3 S6" hSpacing="0" vSpacing="0">
+						<layout:content>
+							<core:Icon src="{path:'MainContact/Photo/__metadata/media_src', formatter: 'cus.crm.myaccounts.util.formatter.pictureUrlFormatter'}"
+								visible="{parts:[{path:'MainContact/contactID'}, {path:'MainContact/Photo/__metadata/media_src'}], formatter:'cus.crm.myaccounts.util.formatter.standardIconVisibilityFormatter'}"
+								size="2.5rem"></core:Icon>
+							<Image src="{path:'MainContact/Photo/__metadata/media_src', formatter:'cus.crm.myaccounts.util.formatter.pictureUrlFormatter'}"
+								visible="{path:'MainContact/Photo/__metadata/media_src', formatter:'cus.crm.myaccounts.util.formatter.logoVisibilityFormatter'}"
+								height="2.5rem" width="2.5rem"></Image>
+							<VBox>
+								<items>
+								<!-- 	<Link text="{MainContact/fullName}" press="onMainContactLinkClicked"/>   --> 
+								<Link text="{MainContact/fullName}" press="onAccountClicked"/> 
+									<Label text="{MainContact/function}"/>
+								</items>
+								<layoutData>
+									<layout:GridData span="L8 M8 S8"/>
+								</layoutData>
+							</VBox>
+						</layout:content>
+					</layout:Grid>
+					<VBox>
+						<items>
+							<Link text="{zdepartmentName}" press="onDepartmentClicked"/>
+							<Label text="{zdepartment}"/>
+						</items>
+						<layoutData>
+							<layout:GridData span="L12 M12 S12"/>
+						</layoutData>
+					</VBox>
+					<Text text="{parts:[{path: 'expRevenue'}, {path: 'currency'}], formatter:'cus.crm.myaccounts.util.formatter.formatAmounts'}"/>
+					<Text text="{path: 'probability', formatter: 'cus.crm.myaccounts.util.formatter.formatProbability'}"/>
+					<Text text="{ztypeDescription}" />
+					<Text text="{zmoduleEnrolment}" />
+					<Text text="{parts:[{path:'closingDate'}],formatter:'cus.crm.myaccounts.util.formatter.formatMediumDate' }"/>
+					<ObjectStatus text="{parts:[{path:'statusText'},{path:'i18n>ZHYPHEN'},{path:'ZzadoptTypeText'}]}" state="{path:'status', formatter:'cus.crm.myaccounts.util.formatter.formatStatusText'}"/>
+					<Text text="{zproduct}" />
+					<!--
+         				<layout:HorizontalLayout>
+				        	<core:Icon src="sap-icon://edit" size="1.3rem" press="onEditOpportunityClicked"/>
+			            </layout:HorizontalLayout>
+			            -->
+				</cells>
+			</ColumnListItem>
+		</items>
+	</Table>
+</core:View>

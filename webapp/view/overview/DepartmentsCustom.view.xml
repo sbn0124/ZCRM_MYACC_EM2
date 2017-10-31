@@ -1,0 +1,27 @@
+<mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m"
+	controllerName="cus.crm.myaccounts.ZCRM_MYACC_EM2.view.overview.DepartmentsCustom" xmlns:layout="sap.ui.layout" xmlns:html="http://www.w3.org/1999/xhtml">
+	<Table id="list" mode="{device>/listMode}" growing="true" growingThreshold="10" growingScrollToLoad="false" items="{path: 'department>/ZDepartments'}">
+		<columns>
+			<Column id="accountColumn" width="16rem" minScreenWidth="Small" demandPopin="true"><Label text="{i18n>ZACCOUNT}"/></Column>
+			<Column id="nameColumn" width="16rem" minScreenWidth="Medium" demandPopin="true"><Label text="{i18n>ZNAME}"/></Column>
+			<Column id="actions" width="3rem" minScreenWidth="XLarge" demandPopin="true"><Text text="{i18n>ACTIONS}" /></Column>
+		</columns>
+		<items>
+			<ColumnListItem id="columnListItem">
+				<cells>
+					<Input value="{department>partner}" editable="{parts:[{path:'department>mode'}, 'constants>/modeEdit'],formatter:'cus.crm.myaccounts.util.formatter.isEqual'}"
+					valueHelpRequest="showAccountF4" showValueHelp="true"/>
+					<Link text="{department>name}" target="{department>partner}" press="onDepartmentClicked" class="sapUiSmallMarginTop sapUiTinyMarginBottom"/>
+					<layout:HorizontalLayout>
+						<core:Icon src="sap-icon://edit" id="actionEdit" size="1.3rem" press="onEditDepartmentClicked"
+							visible="{parts:[{path:'department>mode'}, 'constants>/modeEdit'],formatter:'cus.crm.myaccounts.util.formatter.isUnequal'}"/>
+						<core:Icon src="sap-icon://save" id="actionSave" size="1.3rem" press="onSaveDepartmentClicked"
+							visible="{parts:[{path:'department>mode'}, 'constants>/modeEdit'],formatter:'cus.crm.myaccounts.util.formatter.isEqual'}"/>
+						<layout:HorizontalLayout class="cusMyAccountsPaddingLeft"/>
+						<!--<core:Icon src="sap-icon://delete" id="actionDelete" size="1.3rem" press="onDeleteDepartmentClicked" visible="true"/> -->
+					</layout:HorizontalLayout>
+				</cells>
+			</ColumnListItem>
+		</items>
+	</Table>
+</mvc:View>

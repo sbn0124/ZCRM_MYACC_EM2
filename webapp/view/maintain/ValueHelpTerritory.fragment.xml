@@ -1,0 +1,23 @@
+<!--
+
+    CUSTOM DEVELOPMENT
+
+-->
+<core:FragmentDefinition
+  xmlns="sap.m"
+  xmlns:core="sap.ui.core"
+  xmlns:layout="sap.ui.layout">
+  
+  <SelectDialog
+  	title="{i18n>ZTERRITORY}"
+    class="sapUiPopupWithPadding"
+    items="{TerritoryModel>/results}"    
+    confirm="onTerritoryValueHelpClose"
+    cancel="onTerritoryValueHelpCancel">
+    <StandardListItem
+      title="{TerritoryModel>description}"
+      info ="{TerritoryModel>territory}"
+      />
+  </SelectDialog>
+   
+</core:FragmentDefinition>

@@ -1,0 +1,73 @@
+<!--
+
+    Copyright (C) 2009-2014 SAP SE or an SAP affiliate company. All rights reserved
+
+-->
+<core:FragmentDefinition
+  xmlns="sap.m"
+  xmlns:core="sap.ui.core"
+  xmlns:layout="sap.ui.layout"
+  xmlns:form="sap.ui.layout.form">
+  
+	<form:FormElement id="title" visible="{parts:['category', 'constants>/accountCategoryPerson'], formatter: 'cus.crm.myaccounts.util.formatter.isEqual'}">
+		<form:label>
+			<Label text="{i18n>TITLE}" id="titleLabel" width="100%" />
+   		</form:label>
+		<form:fields>
+			<Select 
+				value="{titleID}" 
+				maxLength="40" 
+				id="titleIDInput" 
+				change="onInputFieldChanged" 
+				items="{path:'Customizing>/TitleCustomizing', filters:[{path:'person', operator: 'EQ', value1: 'X' }] }" 
+				selectedKey="{titleID}">
+		   		<core:Item key="{Customizing>title}" text="{Customizing>titleDescription}"/>
+		   	</Select>
+   		</form:fields>
+	</form:FormElement>
+	
+	<form:FormElement id="academicTitle" visible="{parts:['category', 'constants>/accountCategoryPerson'], formatter: 'cus.crm.myaccounts.util.formatter.isEqual'}">
+		<form:label>
+			<Label text="{i18n>ACADEMIC_TITLE}" id="academicTitleLabel" width="100%"/>
+   		</form:label>
+		<form:fields>
+			<Select value="{academicTitleID}" maxLength="40" id="academicTitleIDInput" change="onInputFieldChanged" items="{Customizing>/AcademicTitleCustomizing}" selectedKey="{academicTitleID}">
+		       	<core:Item key="{Customizing>title}" text="{Customizing>titleDescription}"/>
+		   	</Select>
+   		</form:fields>
+	</form:FormElement>
+
+	<form:FormElement id="name2" visible="{parts:['category', 'constants>/accountCategoryPerson'], formatter: 'cus.crm.myaccounts.util.formatter.isEqual'}">
+		<form:label>
+			<Label text="{i18n>FIRST_NAME}" id="name2Label" width="100%" required="true" />
+   		</form:label>
+		<form:fields>
+			<Input value="{name2}" maxLength="40" id="name2Input" liveChange="onName2InputFieldChanged" />
+   		</form:fields>
+	</form:FormElement>  
+  	
+	<form:FormElement id="name1" visible="{parts:['category', 'constants>/accountCategoryPerson'], formatter: 'cus.crm.myaccounts.util.formatter.isEqual'}">
+		<form:label>
+			<Label text="{i18n>LAST_NAME}" id="name1Label" width="100%" required="true" />
+   		</form:label>
+		<form:fields>
+			<Input value="{name1}" maxLength="40" id="name1Input" liveChange="onName1InputFieldChanged" />
+   		</form:fields>
+	</form:FormElement>   
+	
+	<form:FormElement id="birthDate" visible="{parts:['category', 'constants>/accountCategoryPerson'], formatter: 'cus.crm.myaccounts.util.formatter.isEqual'}">
+		<form:label>
+			<Label text="{i18n>BIRTHDAY}" id="birthDateLabel" width="100%" />
+   		</form:label>
+		<form:fields>
+			<!--
+			<DatePicker id="birthDateInput" value="{path:'birthDate', type:'sap.ui.model.type.Date', formatOptions: { style: 'medium'}}"  change="onInputFieldChanged" displayFormat="medium"/>
+			-->
+			<DateTimeInput id="birthDateInput" value="{path:'birthDate', type:'sap.ui.model.type.Date', formatOptions: { style: 'medium'}}"/>
+   		</form:fields>
+	</form:FormElement> 	                     	
+
+	<!-- Extends the form -->
+   	<core:ExtensionPoint name="extEditFormPerson"/>
+   	
+</core:FragmentDefinition>

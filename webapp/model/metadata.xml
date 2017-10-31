@@ -1,0 +1,1096 @@
+<edmx:Edmx
+    xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx"
+    xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata"
+    xmlns:sap="http://www.sap.com/Protocols/SAPData" Version="1.0">
+    <edmx:DataServices m:DataServiceVersion="2.0">
+        <Schema
+            xmlns="http://schemas.microsoft.com/ado/2008/09/edm" Namespace="ZCRM_BUPA_ODATA_EM_SRV_02" xml:lang="en" sap:schema-version="1">
+            <EntityType Name="Subscription" sap:semantics="subscriptions" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="ID"/>
+                </Key>
+                <Property Name="ID" Type="Edm.String" Nullable="false" MaxLength="32" sap:label="Sub. ID" sap:creatable="false" sap:updatable="false" sap:filterable="false"/>
+                <Property Name="user" Type="Edm.String" MaxLength="12" m:FC_TargetPath="SyndicationAuthorName" m:FC_KeepInContent="false" sap:label="User Name" sap:creatable="false" sap:filterable="false"/>
+                <Property Name="updated" Type="Edm.DateTime" Precision="0" m:FC_TargetPath="SyndicationUpdated" m:FC_KeepInContent="false" sap:label="Time Stamp" sap:creatable="false" sap:filterable="false"/>
+                <Property Name="title" Type="Edm.String" MaxLength="255" m:FC_TargetPath="SyndicationTitle" m:FC_KeepInContent="false" sap:label="Title" sap:filterable="false"/>
+                <Property Name="deliveryAddress" Type="Edm.String" sap:label="Delivery Address" sap:filterable="false"/>
+                <Property Name="persistNotifications" Type="Edm.Boolean" sap:label="Persist Notification" sap:filterable="false"/>
+                <Property Name="collection" Type="Edm.String" MaxLength="40" sap:label="Collection" sap:filterable="false"/>
+                <Property Name="filter" Type="Edm.String" sap:label="Filter" sap:filterable="false"/>
+                <Property Name="select" Type="Edm.String" MaxLength="255" sap:label="Select" sap:filterable="false"/>
+                <Property Name="changeType" Type="Edm.String" MaxLength="30" sap:label="Change Type"/>
+            </EntityType>
+            <EntityType Name="Notification" sap:semantics="notifications" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="ID"/>
+                </Key>
+                <Property Name="ID" Type="Edm.String" Nullable="false" MaxLength="32" sap:label="Notification ID"/>
+                <Property Name="collection" Type="Edm.String" MaxLength="40" sap:label="Collection"/>
+                <Property Name="title" Type="Edm.String" m:FC_TargetPath="SyndicationTitle" m:FC_KeepInContent="false" sap:label="Notif. Text"/>
+                <Property Name="updated" Type="Edm.DateTime" Precision="0" m:FC_TargetPath="SyndicationUpdated" m:FC_KeepInContent="false" sap:label="Time Stamp"/>
+                <Property Name="changeType" Type="Edm.String" MaxLength="30" sap:label="Change Type"/>
+                <Property Name="entriesOfInterest" Type="Edm.Int32" sap:label="No. of Entries"/>
+                <Property Name="recipient" Type="Edm.String" MaxLength="112" sap:label="Recipient" sap:creatable="false" sap:updatable="false"/>
+            </EntityType>
+            <EntityType Name="Employee" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="employeeID"/>
+                </Key>
+                <Property Name="employeeID" Type="Edm.String" Nullable="false" MaxLength="10" sap:label="BusinessPartner"/>
+                <Property Name="firstName" Type="Edm.String" MaxLength="40" sap:label="First name"/>
+                <Property Name="lastName" Type="Edm.String" MaxLength="40" sap:label="Last name"/>
+                <Property Name="titleID" Type="Edm.String" MaxLength="4" sap:label="Title"/>
+                <Property Name="title" Type="Edm.String" MaxLength="30" sap:label="Title"/>
+                <Property Name="academicTitleID" Type="Edm.String" MaxLength="4" sap:label="Academic Title"/>
+                <Property Name="academicTitle" Type="Edm.String" MaxLength="20" sap:label="Academic Title"/>
+                <Property Name="fullName" Type="Edm.String" MaxLength="80" sap:label="BP Description"/>
+                <Property Name="position" Type="Edm.String" MaxLength="40" sap:label="Name"/>
+                <Property Name="isDefaultEmployee" Type="Edm.Boolean" sap:label="TRUE"/>
+                <NavigationProperty Name="WorkAddress" Relationship="ZCRM_BUPA_ODATA_EM_SRV_02.Employee_To_0_Address" FromRole="FromRole_Employee_To_0_Address" ToRole="ToRole_Employee_To_0_Address"/>
+                <NavigationProperty Name="Company" Relationship="ZCRM_BUPA_ODATA_EM_SRV_02.Employee_To_0_Account" FromRole="FromRole_Employee_To_0_Account" ToRole="ToRole_Employee_To_0_Account"/>
+                <NavigationProperty Name="Photo" Relationship="ZCRM_BUPA_ODATA_EM_SRV_02.Employee_To_0_Attachment" FromRole="FromRole_Employee_To_0_Attachment" ToRole="ToRole_Employee_To_0_Attachment"/>
+            </EntityType>
+            <EntityType Name="CustomizingAcademicTitle" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="title"/>
+                </Key>
+                <Property Name="title" Type="Edm.String" Nullable="false" MaxLength="4" sap:label="Academic Title"/>
+                <Property Name="titleDescription" Type="Edm.String" MaxLength="40" sap:label="Ac.title descr."/>
+            </EntityType>
+            <EntityType Name="CustomizingTitle" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="title"/>
+                </Key>
+                <Property Name="title" Type="Edm.String" Nullable="false" MaxLength="4" sap:label="Title"/>
+                <Property Name="titleDescription" Type="Edm.String" MaxLength="30" sap:label="Title"/>
+                <Property Name="person" Type="Edm.String" MaxLength="1" sap:label="Person title"/>
+                <Property Name="organization" Type="Edm.String" MaxLength="1" sap:label="Organization"/>
+                <Property Name="group" Type="Edm.String" MaxLength="1" sap:label="Group"/>
+            </EntityType>
+            <EntityType Name="CustomizingRating" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="ratingID"/>
+                </Key>
+                <Property Name="ratingID" Type="Edm.String" Nullable="false" MaxLength="2" sap:label="Classification"/>
+                <Property Name="ratingText" Type="Edm.String" MaxLength="20" sap:label="Description"/>
+            </EntityType>
+            <EntityType Name="CustomizingCountry" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="countryID"/>
+                </Key>
+                <Property Name="countryID" Type="Edm.String" Nullable="false" MaxLength="3" sap:label="Country"/>
+                <Property Name="country" Type="Edm.String" MaxLength="15" sap:label="Name"/>
+            </EntityType>
+            <EntityType Name="CustomizingRegion" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="regionID"/>
+                </Key>
+                <Property Name="regionID" Type="Edm.String" Nullable="false" MaxLength="3" sap:label="Region"/>
+                <Property Name="region" Type="Edm.String" MaxLength="20" sap:label="Description"/>
+                <Property Name="countryID" Type="Edm.String" MaxLength="3" sap:label="Country"/>
+            </EntityType>
+            <EntityType Name="CustomizingMarketingAttrSet" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="attributeSetID"/>
+                </Key>
+                <Property Name="attributeSetID" Type="Edm.String" Nullable="false" MaxLength="18" sap:label="Attribute Set"/>
+                <Property Name="attributeSet" Type="Edm.String" MaxLength="40" sap:label="Description"/>
+                <Property Name="category" Type="Edm.String" MaxLength="1" sap:label="Partner cat."/>
+            </EntityType>
+            <EntityType Name="CustomizingMarketingAttribute" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="attributeSetID"/>
+                    <PropertyRef Name="attributeID"/>
+                </Key>
+                <Property Name="attributeSetID" Type="Edm.String" Nullable="false" MaxLength="18" sap:label="Attribute Set"/>
+                <Property Name="attributeSet" Type="Edm.String" MaxLength="40" sap:label="Description"/>
+                <Property Name="attributeID" Type="Edm.String" Nullable="false" MaxLength="30" sap:label="Attribute"/>
+                <Property Name="attribute" Type="Edm.String" MaxLength="90" sap:label="Attr. Description"/>
+                <Property Name="attributeDatatype" Type="Edm.String" MaxLength="18" sap:label="Format"/>
+                <Property Name="category" Type="Edm.String" MaxLength="1" sap:label="Partner cat."/>
+                <Property Name="currency" Type="Edm.String" MaxLength="5" sap:label="Currency" sap:semantics="currency-code"/>
+                <Property Name="decimalPlaces" Type="Edm.String" MaxLength="2" sap:label="Decimal places"/>
+                <NavigationProperty Name="MarketingAttributeValues" Relationship="ZCRM_BUPA_ODATA_EM_SRV_02.CustomizingMarketingAttribute_To_M_Custo" FromRole="FromRole_CustomizingMarketingAttribute_To_M_Custo" ToRole="ToRole_CustomizingMarketingAttribute_To_M_Custo"/>
+            </EntityType>
+            <EntityType Name="CustomizingMarketingAttrValue" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="attributeSetID"/>
+                    <PropertyRef Name="attributeID"/>
+                    <PropertyRef Name="valueID"/>
+                </Key>
+                <Property Name="attributeSetID" Type="Edm.String" Nullable="false" MaxLength="18" sap:label="Attribute Set"/>
+                <Property Name="attributeID" Type="Edm.String" Nullable="false" MaxLength="30" sap:label="Attribute"/>
+                <Property Name="valueID" Type="Edm.String" Nullable="false" MaxLength="30" sap:label="Char. Value"/>
+                <Property Name="value" Type="Edm.String" MaxLength="90" sap:label="Attr. Description"/>
+                <Property Name="isDefault" Type="Edm.String" MaxLength="1" sap:label="Default"/>
+                <Property Name="currency" Type="Edm.String" MaxLength="5" sap:label="Currency" sap:semantics="currency-code"/>
+                <Property Name="decimalPlaces" Type="Edm.String" MaxLength="2" sap:label="Decimal places"/>
+            </EntityType>
+            <EntityType Name="CustomizingTaskType" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="language"/>
+                    <PropertyRef Name="processTypeCode"/>
+                </Key>
+                <Property Name="language" Type="Edm.String" Nullable="false" MaxLength="2" sap:label="Lang. (ISO)"/>
+                <Property Name="processTypeCode" Type="Edm.String" Nullable="false" MaxLength="4" sap:label="Transaction Type"/>
+                <Property Name="processTypeDescription" Type="Edm.String" MaxLength="40" sap:label="Description"/>
+                <Property Name="privateFlag" Type="Edm.Boolean" sap:label="Private"/>
+            </EntityType>
+            <EntityType Name="CustomizingTaskPriority" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="priority"/>
+                </Key>
+                <Property Name="priority" Type="Edm.String" Nullable="false" MaxLength="1" sap:label="Priority"/>
+                <Property Name="description" Type="Edm.String" MaxLength="40" sap:label="Description"/>
+                <Property Name="isDefault" Type="Edm.Boolean" sap:label="Data element to simulate bool: 'X' is true and ' ' is false"/>
+            </EntityType>
+            <EntityType Name="CustomizingTaskStatus" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="Language"/>
+                    <PropertyRef Name="status"/>
+                </Key>
+                <Property Name="Language" Type="Edm.String" Nullable="false" MaxLength="2" sap:label="Lang. (ISO)"/>
+                <Property Name="status" Type="Edm.String" Nullable="false" MaxLength="5" sap:label="Status"/>
+                <Property Name="statusDescription" Type="Edm.String" MaxLength="30" sap:label="Status"/>
+                <Property Name="statusFlag" Type="Edm.String" MaxLength="1" sap:label="Initial status"/>
+            </EntityType>
+            <EntityType Name="CustomizingAppointmentType" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="language"/>
+                    <PropertyRef Name="processTypeCode"/>
+                </Key>
+                <Property Name="language" Type="Edm.String" Nullable="false" MaxLength="2" sap:label="Lang. (ISO)"/>
+                <Property Name="processTypeCode" Type="Edm.String" Nullable="false" MaxLength="4" sap:label="Transaction Type"/>
+                <Property Name="processTypeDescription" Type="Edm.String" MaxLength="40" sap:label="Description"/>
+                <Property Name="privateFlag" Type="Edm.Boolean" sap:label="Private"/>
+            </EntityType>
+            <EntityType Name="CustomizingOpportunityType" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="language"/>
+                    <PropertyRef Name="processTypeCode"/>
+                </Key>
+                <Property Name="language" Type="Edm.String" Nullable="false" MaxLength="2" sap:label="Lang. (ISO)"/>
+                <Property Name="processTypeCode" Type="Edm.String" Nullable="false" MaxLength="4" sap:label="Transaction Type"/>
+                <Property Name="processTypeDescription" Type="Edm.String" MaxLength="40" sap:label="Description"/>
+            </EntityType>
+            <EntityType Name="Contact" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="contactID"/>
+                    <PropertyRef Name="accountID"/>
+                </Key>
+                <Property Name="contactID" Type="Edm.String" Nullable="false" MaxLength="10" sap:label="BusinessPartner"/>
+                <Property Name="accountID" Type="Edm.String" Nullable="false" MaxLength="10" sap:label="BusinessPartner"/>
+                <Property Name="firstName" Type="Edm.String" MaxLength="40" sap:label="First name"/>
+                <Property Name="lastName" Type="Edm.String" MaxLength="40" sap:label="Last name"/>
+                <Property Name="fullName" Type="Edm.String" MaxLength="80" sap:label="BP Description"/>
+                <Property Name="birthDate" Type="Edm.DateTime" Precision="0" sap:label="Date of Birth"/>
+                <Property Name="company" Type="Edm.String" MaxLength="80" sap:label="BP Description"/>
+                <Property Name="function" Type="Edm.String" MaxLength="40" sap:label="Function"/>
+                <Property Name="department" Type="Edm.String" MaxLength="40" sap:label="Company dept."/>
+                <Property Name="titleID" Type="Edm.String" MaxLength="4" sap:label="Title"/>
+                <Property Name="title" Type="Edm.String" MaxLength="30" sap:label="Title"/>
+                <Property Name="academicTitleID" Type="Edm.String" MaxLength="4" sap:label="Academic Title"/>
+                <Property Name="academicTitle" Type="Edm.String" MaxLength="20" sap:label="Academic Title"/>
+                <Property Name="isMyContact" Type="Edm.Boolean" sap:label="TRUE"/>
+                <Property Name="isMainContact" Type="Edm.Boolean" sap:label="TRUE"/>
+                <Property Name="eTag" Type="Edm.String" MaxLength="40" ConcurrencyMode="Fixed" sap:label="Hash Value"/>
+                <NavigationProperty Name="WorkAddress" Relationship="ZCRM_BUPA_ODATA_EM_SRV_02.Contact_To_0_Address" FromRole="FromRole_Contact_To_0_Address" ToRole="ToRole_Contact_To_0_Address"/>
+                <NavigationProperty Name="MainAddress" Relationship="ZCRM_BUPA_ODATA_EM_SRV_02.Contact_To_0_Address" FromRole="FromRole_Contact_To_0_Address" ToRole="ToRole_Contact_To_0_Address"/>
+                <NavigationProperty Name="Photo" Relationship="ZCRM_BUPA_ODATA_EM_SRV_02.Contact_To_0_Attachment" FromRole="FromRole_Contact_To_0_Attachment" ToRole="ToRole_Contact_To_0_Attachment"/>
+                <NavigationProperty Name="Notes" Relationship="ZCRM_BUPA_ODATA_EM_SRV_02.Contact_To_M_Note" FromRole="FromRole_Contact_To_M_Note" ToRole="ToRole_Contact_To_M_Note"/>
+                <NavigationProperty Name="Attachments" Relationship="ZCRM_BUPA_ODATA_EM_SRV_02.Contact_To_M_Attachment" FromRole="FromRole_Contact_To_M_Attachment" ToRole="ToRole_Contact_To_M_Attachment"/>
+                <NavigationProperty Name="Account" Relationship="ZCRM_BUPA_ODATA_EM_SRV_02.Contact_To_0_Account" FromRole="FromRole_Contact_To_0_Account" ToRole="ToRole_Contact_To_0_Account"/>
+                <NavigationProperty Name="ZCustomFields" Relationship="ZCRM_BUPA_ODATA_EM_SRV_02.ZContact_To_M_CustomFields" FromRole="FromRole_ZContact_To_M_CustomFields" ToRole="ToRole_ZContact_To_M_CustomFields"/>
+            </EntityType>
+            <EntityType Name="Address" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="addressNumber"/>
+                    <PropertyRef Name="accountID"/>
+                    <PropertyRef Name="contactID"/>
+                </Key>
+                <Property Name="addressNumber" Type="Edm.String" Nullable="false" MaxLength="10" sap:label="Address number"/>
+                <Property Name="accountID" Type="Edm.String" Nullable="false" MaxLength="10" sap:label="BusinessPartner"/>
+                <Property Name="contactID" Type="Edm.String" Nullable="false" MaxLength="10" sap:label="BusinessPartner"/>
+                <Property Name="mobilePhone" Type="Edm.String" MaxLength="30" sap:label="Telephone no."/>
+                <Property Name="phone" Type="Edm.String" MaxLength="30" sap:label="Telephone no."/>
+                <Property Name="email" Type="Edm.String" MaxLength="241" sap:label="E-Mail Address"/>
+                <Property Name="website" Type="Edm.String" MaxLength="132" sap:label="URI"/>
+                <Property Name="address" Type="Edm.String" sap:label="Text Lines"/>
+                <Property Name="street" Type="Edm.String" MaxLength="60" sap:label="Street"/>
+                <Property Name="houseNumber" Type="Edm.String" MaxLength="10" sap:label="House Number"/>
+                <Property Name="postcode" Type="Edm.String" MaxLength="10" sap:label="Postal Code"/>
+                <Property Name="city" Type="Edm.String" MaxLength="40" sap:label="City"/>
+                <Property Name="countryID" Type="Edm.String" MaxLength="3" sap:label="Country"/>
+                <Property Name="country" Type="Edm.String" MaxLength="15" sap:label="Name"/>
+                <Property Name="regionID" Type="Edm.String" MaxLength="3" sap:label="Region"/>
+                <Property Name="region" Type="Edm.String" MaxLength="20" sap:label="Description"/>
+                <Property Name="department" Type="Edm.String" MaxLength="40" sap:label="Department"/>
+                <Property Name="function" Type="Edm.String" MaxLength="40" sap:label="Function"/>
+                <Property Name="eTag" Type="Edm.String" MaxLength="40" ConcurrencyMode="Fixed" sap:label="Hash Value"/>
+                <Property Name="Zznoaddrvalidation" Type="Edm.String" MaxLength="1"/>
+                <Property Name="zBuilding" Type="Edm.String" MaxLength="20"/>
+                <Property Name="zRoomNumber" Type="Edm.String" MaxLength="10"/>
+                <Property Name="zzAddrKind" Type="Edm.String" MaxLength="10"/>
+                <Property Name="street2" Type="Edm.String" Nullable="false" MaxLength="40" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+            </EntityType>
+            <EntityType Name="Attachment" m:HasStream="true" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="documentID"/>
+                    <PropertyRef Name="documentClass"/>
+                    <PropertyRef Name="businessPartnerID"/>
+                </Key>
+                <Property Name="documentID" Type="Edm.String" Nullable="false" MaxLength="32" sap:label="Object ID"/>
+                <Property Name="documentClass" Type="Edm.String" Nullable="false" MaxLength="10" sap:label="DocuClass"/>
+                <Property Name="businessPartnerID" Type="Edm.String" Nullable="false" MaxLength="10" sap:label="BusinessPartner"/>
+                <Property Name="name" Type="Edm.String" MaxLength="40" sap:label="Name"/>
+                <Property Name="description" Type="Edm.String" MaxLength="64" sap:label="Description"/>
+                <Property Name="createdAt" Type="Edm.DateTime" Precision="0" sap:label="Time Stamp"/>
+                <Property Name="createdBy" Type="Edm.String" MaxLength="40" sap:label="Empl./appl.name"/>
+                <Property Name="fileSize" Type="Edm.String" MaxLength="12" sap:label="File Size"/>
+                <Property Name="mimeType" Type="Edm.String" MaxLength="128" sap:label="MIME type"/>
+                <Property Name="URL" Type="Edm.String" sap:label="URL"/>
+                <Property Name="eTag" Type="Edm.String" MaxLength="40" ConcurrencyMode="Fixed" sap:label="Hash Value"/>
+            </EntityType>
+            <EntityType Name="Note" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="tdname"/>
+                    <PropertyRef Name="tdid"/>
+                    <PropertyRef Name="tdspras"/>
+                </Key>
+                <Property Name="tdname" Type="Edm.String" Nullable="false" MaxLength="70" sap:label="Text Name"/>
+                <Property Name="tdid" Type="Edm.String" Nullable="false" MaxLength="4" sap:label="Text ID"/>
+                <Property Name="tdspras" Type="Edm.String" Nullable="false" MaxLength="2" sap:label="Language"/>
+                <Property Name="content" Type="Edm.String" sap:label="Text Lines"/>
+                <Property Name="createdAt" Type="Edm.DateTime" Precision="0" sap:label="Time Stamp"/>
+                <Property Name="creator" Type="Edm.String" MaxLength="50" sap:label="Description"/>
+            </EntityType>
+            <EntityType Name="Account" sap:service-schema-version="1" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="accountID"/>
+                </Key>
+                <Property Name="accountID" Type="Edm.String" Nullable="false" MaxLength="10" sap:label="BusinessPartner"/>
+                <Property Name="name1" Type="Edm.String" MaxLength="40" sap:label="Name 1"/>
+                <Property Name="name2" Type="Edm.String" MaxLength="40" sap:label="Name 2"/>
+                <Property Name="fullName" Type="Edm.String" MaxLength="80" sap:label="BP Description"/>
+                <Property Name="category" Type="Edm.String" MaxLength="1" sap:label="Partner cat."/>
+                <Property Name="titleID" Type="Edm.String" MaxLength="4" sap:label="Title"/>
+                <Property Name="title" Type="Edm.String" MaxLength="30" sap:label="Title"/>
+                <Property Name="academicTitleID" Type="Edm.String" MaxLength="4" sap:label="Academic Title"/>
+                <Property Name="academicTitle" Type="Edm.String" MaxLength="20" sap:label="Academic Title"/>
+                <Property Name="birthDate" Type="Edm.DateTime" Precision="0" sap:label="Date of Birth"/>
+                <Property Name="isMyAccount" Type="Edm.Boolean" sap:label="TRUE"/>
+                <Property Name="eTag" Type="Edm.String" MaxLength="40" ConcurrencyMode="Fixed" sap:label="Hash Value"/>
+                <Property Name="zAccountStatus" Type="Edm.String" Nullable="false" MaxLength="2" sap:label="Status Number" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="zSamplingStatus" Type="Edm.String" Nullable="false" MaxLength="2" sap:label="Sampling/ICS status" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="zIsDepartment" Type="Edm.Boolean" Nullable="false" sap:label="TRUE" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="zIsMyTerritory" Type="Edm.Boolean" sap:label="TRUE" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="name3" Type="Edm.String" Nullable="false" MaxLength="40" sap:label="Name 3" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <NavigationProperty Name="MainContact" Relationship="ZCRM_BUPA_ODATA_EM_SRV_02.Account_To_0_Contact" FromRole="FromRole_Account_To_0_Contact" ToRole="ToRole_Account_To_0_Contact"/>
+                <NavigationProperty Name="Contacts" Relationship="ZCRM_BUPA_ODATA_EM_SRV_02.Account_To_M_Contact" FromRole="FromRole_Account_To_M_Contact" ToRole="ToRole_Account_To_M_Contact"/>
+                <NavigationProperty Name="Classification" Relationship="ZCRM_BUPA_ODATA_EM_SRV_02.Account_To_0_Classification" FromRole="FromRole_Account_To_0_Classification" ToRole="ToRole_Account_To_0_Classification"/>
+                <NavigationProperty Name="Logo" Relationship="ZCRM_BUPA_ODATA_EM_SRV_02.Account_To_0_Attachment" FromRole="FromRole_Account_To_0_Attachment" ToRole="ToRole_Account_To_0_Attachment"/>
+                <NavigationProperty Name="MainAddress" Relationship="ZCRM_BUPA_ODATA_EM_SRV_02.Account_To_0_Address" FromRole="FromRole_Account_To_0_Address" ToRole="ToRole_Account_To_0_Address"/>
+                <NavigationProperty Name="Addresses" Relationship="ZCRM_BUPA_ODATA_EM_SRV_02.Account_To_M_Address" FromRole="FromRole_Account_To_M_Address" ToRole="ToRole_Account_To_M_Address"/>
+                <NavigationProperty Name="MarketingAttributes" Relationship="ZCRM_BUPA_ODATA_EM_SRV_02.Account_To_M_MarketingAttribute" FromRole="FromRole_Account_To_M_MarketingAttribute" ToRole="ToRole_Account_To_M_MarketingAttribute"/>
+                <NavigationProperty Name="Opportunities" Relationship="ZCRM_BUPA_ODATA_EM_SRV_02.Account_To_M_Opportunity" FromRole="FromRole_Account_To_M_Opportunity" ToRole="ToRole_Account_To_M_Opportunity"/>
+                <NavigationProperty Name="Leads" Relationship="ZCRM_BUPA_ODATA_EM_SRV_02.Account_To_M_Lead" FromRole="FromRole_Account_To_M_Lead" ToRole="ToRole_Account_To_M_Lead"/>
+                <NavigationProperty Name="Attachments" Relationship="ZCRM_BUPA_ODATA_EM_SRV_02.Account_To_M_Attachment" FromRole="FromRole_Account_To_M_Attachment" ToRole="ToRole_Account_To_M_Attachment"/>
+                <NavigationProperty Name="Notes" Relationship="ZCRM_BUPA_ODATA_EM_SRV_02.Account_To_M_Note" FromRole="FromRole_Account_To_M_Note" ToRole="ToRole_Account_To_M_Note"/>
+                <NavigationProperty Name="EmployeeResponsible" Relationship="ZCRM_BUPA_ODATA_EM_SRV_02.Account_To_0_Employee" FromRole="FromRole_Account_To_0_Employee" ToRole="ToRole_Account_To_0_Employee"/>
+                <NavigationProperty Name="EmployeeResponsibles" Relationship="ZCRM_BUPA_ODATA_EM_SRV_02.Account_To_M_Employee" FromRole="FromRole_Account_To_M_Employee" ToRole="ToRole_Account_To_M_Employee"/>
+                <NavigationProperty Name="Appointments" Relationship="ZCRM_BUPA_ODATA_EM_SRV_02.Account_To_M_Appointment" FromRole="FromRole_Account_To_M_Appointment" ToRole="ToRole_Account_To_M_Appointment"/>
+                <NavigationProperty Name="Tasks" Relationship="ZCRM_BUPA_ODATA_EM_SRV_02.Account_To_M_Task" FromRole="FromRole_Account_To_M_Task" ToRole="ToRole_Account_To_M_Task"/>
+                <NavigationProperty Name="Relationships" Relationship="ZCRM_BUPA_ODATA_EM_SRV_02.Account_To_M_Relationship" FromRole="FromRole_Account_To_M_Relationship" ToRole="ToRole_Account_To_M_Relationship"/>
+                <NavigationProperty Name="EmployeeResponsibleRel" Relationship="ZCRM_BUPA_ODATA_EM_SRV_02.Account_To_0_Relationship" FromRole="FromRole_Account_To_0_Relationship" ToRole="ToRole_Account_To_0_Relationship"/>
+                <NavigationProperty Name="ERPCustomer" Relationship="ZCRM_BUPA_ODATA_EM_SRV_02.Account_To_0_Customer" FromRole="FromRole_Account_To_0_Customer" ToRole="ToRole_Account_To_0_Customer"/>
+                <NavigationProperty Name="AccountFactsheet" Relationship="ZCRM_BUPA_ODATA_EM_SRV_02.Account_To_1_AccountFactsheet" FromRole="FromRole_Account_To_1_AccountFactsheet" ToRole="ToRole_Account_To_1_AccountFactsheet"/>
+                <NavigationProperty Name="ZCustomFieldsRel" Relationship="ZCRM_BUPA_ODATA_EM_SRV_02.ZAccount_To_M_CustomFields" FromRole="FromRole_ZAccount_To_M_CustomFields" ToRole="ToRole_ZAccount_To_M_CustomFields"/>
+                <NavigationProperty Name="ZAccountThirdtypeCustomizing" Relationship="ZCRM_BUPA_ODATA_EM_SRV_02.ZAccount_To_M_Cust_Thirdtype" FromRole="FromRole_ZAccount_To_M_Cust_Thirdtype" ToRole="ToRole_ZAccount_To_M_Cust_Thirdtype"/>
+                <NavigationProperty Name="ZAccountAccStatusCustomizing" Relationship="ZCRM_BUPA_ODATA_EM_SRV_02.ZAccount_To_M_Cust_AccStatus" FromRole="FromRole_ZAccount_To_M_Cust_AccStatus" ToRole="ToRole_ZAccount_To_M_Cust_AccStatus"/>
+                <NavigationProperty Name="ZDepartments" Relationship="ZCRM_BUPA_ODATA_EM_SRV_02.ZAccount_To_M_Departments" FromRole="FromRole_ZAccount_To_M_Departments" ToRole="ToRole_ZAccount_To_M_Departments"/>
+                <NavigationProperty Name="ZCustomFields" Relationship="ZCRM_BUPA_ODATA_EM_SRV_02.ZAccount_To_0_CustomFields" FromRole="FromRole_ZAccount_To_0_CustomFields" ToRole="ToRole_ZAccount_To_0_CustomFields"/>
+                <NavigationProperty Name="ZAccountTypeCustomizing" Relationship="ZCRM_BUPA_ODATA_EM_SRV_02.ZAccount_To_M_Cust_AccountType" FromRole="FromRole_ZAccount_To_M_Cust_AccountType" ToRole="ToRole_ZAccount_To_M_Cust_AccountType"/>
+                <NavigationProperty Name="ZAccountSubtypeCustomizing" Relationship="ZCRM_BUPA_ODATA_EM_SRV_02.ZAccount_To_M_Cust_Subtype" FromRole="FromRole_ZAccount_To_M_Cust_Subtype" ToRole="ToRole_ZAccount_To_M_Cust_Subtype"/>
+                <NavigationProperty Name="ZAccountAccStatus" Relationship="ZCRM_BUPA_ODATA_EM_SRV_02.ZAccount_To_0_Cust_AccStatus" FromRole="FromRole_ZAccount_To_0_Cust_AccStatus" ToRole="ToRole_ZAccount_To_0_Cust_AccStatus"/>
+                <NavigationProperty Name="ZModules" Relationship="ZCRM_BUPA_ODATA_EM_SRV_02.ZAccount_To_M_Modules" FromRole="FromRole_ZAccount_To_M_Modules" ToRole="ToRole_ZAccount_To_M_Modules"/>
+            </EntityType>
+            <EntityType Name="Classification" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="accountID"/>
+                </Key>
+                <Property Name="accountID" Type="Edm.String" Nullable="false" MaxLength="10" sap:label="BusinessPartner"/>
+                <Property Name="ratingID" Type="Edm.String" MaxLength="2" sap:label="Classification"/>
+                <Property Name="ratingText" Type="Edm.String" MaxLength="20" sap:label="Description"/>
+                <Property Name="eTag" Type="Edm.String" MaxLength="40" ConcurrencyMode="Fixed" sap:label="Hash Value"/>
+            </EntityType>
+            <EntityType Name="MarketingAttribute" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="accountID"/>
+                    <PropertyRef Name="attributeSetID"/>
+                    <PropertyRef Name="attributeID"/>
+                    <PropertyRef Name="valueID"/>
+                </Key>
+                <Property Name="accountID" Type="Edm.String" Nullable="false" MaxLength="10" sap:label="BusinessPartner"/>
+                <Property Name="attributeSetID" Type="Edm.String" Nullable="false" MaxLength="18" sap:label="Attribute Set"/>
+                <Property Name="attributeSet" Type="Edm.String" MaxLength="40" sap:label="Description"/>
+                <Property Name="attributeID" Type="Edm.String" Nullable="false" MaxLength="30" sap:label="Attribute"/>
+                <Property Name="attribute" Type="Edm.String" MaxLength="90" sap:label="Attr. Description"/>
+                <Property Name="attributeDatatype" Type="Edm.String" MaxLength="18" sap:label="Format"/>
+                <Property Name="valueID" Type="Edm.String" Nullable="false" MaxLength="30" sap:label="Char. Value"/>
+                <Property Name="value" Type="Edm.String" MaxLength="90" sap:label="Attr. Description"/>
+                <Property Name="dateValue" Type="Edm.DateTime" Precision="0" sap:label="Date"/>
+                <Property Name="currency" Type="Edm.String" MaxLength="5" sap:label="Currency" sap:semantics="currency-code"/>
+                <Property Name="hasChecktable" Type="Edm.Boolean" sap:label="Flag"/>
+                <Property Name="valueRestricted" Type="Edm.Boolean" sap:label="Flag"/>
+                <Property Name="attributeLength" Type="Edm.String" MaxLength="2" sap:label="Number of characters"/>
+                <Property Name="decimalPlaces" Type="Edm.String" MaxLength="2" sap:label="Decimal places"/>
+                <Property Name="eTag" Type="Edm.String" MaxLength="40" sap:label="Hash Value"/>
+            </EntityType>
+            <EntityType Name="Opportunity" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="Guid"/>
+                </Key>
+                <Property Name="Guid" Type="Edm.Guid" Nullable="false" sap:label="Object GUID"/>
+                <Property Name="objectId" Type="Edm.String" MaxLength="10" sap:label="Transaction No."/>
+                <Property Name="description" Type="Edm.String" MaxLength="40" sap:label="Description"/>
+                <Property Name="startDate" Type="Edm.DateTime" Precision="0" sap:label="Start Date"/>
+                <Property Name="closingDate" Type="Edm.DateTime" Precision="0" sap:label="Closing Date"/>
+                <Property Name="expRevenue" Type="Edm.Decimal" Precision="15" Scale="14" sap:unit="currency" sap:label="Expected Sales Vol."/>
+                <Property Name="currency" Type="Edm.String" MaxLength="5" sap:label="Currency" sap:semantics="currency-code"/>
+                <Property Name="currPhaseText" Type="Edm.String" MaxLength="40" sap:label="Description"/>
+                <Property Name="status" Type="Edm.String" MaxLength="5" sap:label="Status"/>
+                <Property Name="statusText" Type="Edm.String" MaxLength="40" sap:label="User Status"/>
+                <Property Name="probability" Type="Edm.String" MaxLength="3" sap:label="Chance of Success %"/>
+                <Property Name="ZzadoptTypeText" Type="Edm.String" Nullable="false" MaxLength="20" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="ztype" Type="Edm.String" Nullable="false" MaxLength="2" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="ztypeDescription" Type="Edm.String" Nullable="false" MaxLength="90" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="zmoduleEnrolment" Type="Edm.String" Nullable="false" MaxLength="4" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="zdepartmentName" Type="Edm.String" Nullable="false" MaxLength="32" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="zdepartment" Type="Edm.String" Nullable="false" MaxLength="10" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="zproduct" Type="Edm.String" Nullable="false" MaxLength="40" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <NavigationProperty Name="MainContact" Relationship="ZCRM_BUPA_ODATA_EM_SRV_02.Opportunity_To_0_Contact" FromRole="FromRole_Opportunity_To_0_Contact" ToRole="ToRole_Opportunity_To_0_Contact"/>
+            </EntityType>
+            <EntityType Name="Lead" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="Guid"/>
+                </Key>
+                <Property Name="Guid" Type="Edm.Guid" Nullable="false" sap:label="Object GUID"/>
+                <Property Name="objectId" Type="Edm.String" MaxLength="10" sap:label="Transaction No."/>
+                <Property Name="description" Type="Edm.String" MaxLength="40" sap:label="Description"/>
+                <Property Name="validFrom" Type="Edm.DateTime" Precision="0" sap:label="Start Date"/>
+                <Property Name="validTo" Type="Edm.DateTime" Precision="0" sap:label="End Date"/>
+                <Property Name="qualificationLevel" Type="Edm.String" MaxLength="40" sap:label="Description"/>
+                <Property Name="status" Type="Edm.String" MaxLength="5" sap:label="Status"/>
+                <Property Name="statusText" Type="Edm.String" MaxLength="30" sap:label="Status"/>
+                <Property Name="importanceText" Type="Edm.String" MaxLength="60" sap:label="Priority"/>
+                <NavigationProperty Name="EmployeeResponsible" Relationship="ZCRM_BUPA_ODATA_EM_SRV_02.Lead_To_0_Employee" FromRole="FromRole_Lead_To_0_Employee" ToRole="ToRole_Lead_To_0_Employee"/>
+            </EntityType>
+            <EntityType Name="Appointment" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="Guid"/>
+                </Key>
+                <Property Name="Note" Type="Edm.String" sap:label="Text Lines" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Responsible" Type="Edm.String" MaxLength="10" sap:label="Employee Resp." sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="ResponsibleTxt" Type="Edm.String" MaxLength="80" sap:label="Person Responsible" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="PrivatFlag" Type="Edm.Boolean" sap:label="Private" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Priority" Type="Edm.String" MaxLength="1" sap:label="Priority" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="PriorityTxt" Type="Edm.String" MaxLength="60" sap:label="Priority" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="AllDay" Type="Edm.Boolean" sap:label="All day event" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Status" Type="Edm.String" MaxLength="5" sap:label="Status" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="StatusTxt" Type="Edm.String" MaxLength="40" sap:label="User Status" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Account" Type="Edm.String" MaxLength="10" sap:label="ActivityPartner" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="AccountTxt" Type="Edm.String" MaxLength="80" sap:label="Activity Partner" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Contact" Type="Edm.String" MaxLength="10" sap:label="Contact Pers." sap:sortable="false" sap:filterable="false"/>
+                <Property Name="ContactTxt" Type="Edm.String" MaxLength="80" sap:label="Contact Person" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="ChangedAt" Type="Edm.DateTime" Precision="0" sap:label="Time Stamp" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="ResponsArea" Type="Edm.String" MaxLength="2" sap:label="X" sap:creatable="false" sap:updatable="false" sap:sortable="false"/>
+                <Property Name="Guid" Type="Edm.Guid" Nullable="false" sap:label="Object GUID" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Description" Type="Edm.String" MaxLength="40" m:FC_TargetPath="SyndicationTitle" m:FC_KeepInContent="true" sap:label="Description" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Location" Type="Edm.String" MaxLength="100" sap:label="Location" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="FromOffset" Type="Edm.Int16" sap:label="Offset in Minutes" sap:creatable="false" sap:updatable="false" sap:sortable="false"/>
+                <Property Name="ToOffset" Type="Edm.Int16" sap:label="Offset in Minutes" sap:creatable="false" sap:updatable="false" sap:sortable="false"/>
+                <Property Name="FromDate" Type="Edm.DateTime" Precision="0" sap:label="Time Stamp"/>
+                <Property Name="ToDate" Type="Edm.DateTime" Precision="0" sap:label="Time Stamp"/>
+                <Property Name="HasAttachment" Type="Edm.Boolean" sap:label="Data element to simulate bool: 'X' is true and ' ' is false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="MyOwn" Type="Edm.Boolean" sap:label="Data element to simulate bool: 'X' is true and ' ' is false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="ContactAccount" Type="Edm.String" MaxLength="10" sap:label="BusinessPartner" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+            </EntityType>
+            <EntityType Name="Task" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="Guid"/>
+                </Key>
+                <Property Name="Guid" Type="Edm.Guid" Nullable="false" sap:label="Object GUID"/>
+                <Property Name="objectId" Type="Edm.String" MaxLength="10" sap:label="Transaction No."/>
+                <Property Name="description" Type="Edm.String" sap:label="Description"/>
+                <Property Name="note" Type="Edm.String" sap:label="Note"/>
+                <Property Name="priority" Type="Edm.String" MaxLength="1" sap:label="Priority"/>
+                <Property Name="privateFlag" Type="Edm.Boolean" sap:label="Private"/>
+                <Property Name="completed" Type="Edm.Boolean" sap:label="Flag"/>
+                <Property Name="dueDate" Type="Edm.DateTime" Precision="0" sap:label="Time Stamp"/>
+                <Property Name="accountID" Type="Edm.String" MaxLength="10" sap:label="ActivityPartner"/>
+                <Property Name="contactName" Type="Edm.String" MaxLength="50" sap:label="Description"/>
+            </EntityType>
+            <EntityType Name="Relationship" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="accountID"/>
+                    <PropertyRef Name="account2ID"/>
+                    <PropertyRef Name="relationshipCategory"/>
+                </Key>
+                <Property Name="accountID" Type="Edm.String" Nullable="false" MaxLength="10" sap:label="BusinessPartner"/>
+                <Property Name="account2ID" Type="Edm.String" Nullable="false" MaxLength="10" sap:label="BusinessPartner"/>
+                <Property Name="relationshipCategory" Type="Edm.String" Nullable="false" MaxLength="6" sap:label="Relationsh.Cat."/>
+                <Property Name="account2FullName" Type="Edm.String" MaxLength="80" sap:label="BP Description"/>
+                <Property Name="main" Type="Edm.Boolean" sap:label="TRUE"/>
+                <Property Name="eTag" Type="Edm.String" MaxLength="40" ConcurrencyMode="Fixed" sap:label="Hash Value"/>
+            </EntityType>
+            <EntityType Name="Customer" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="customerNumber"/>
+                </Key>
+                <Property Name="customerNumber" Type="Edm.String" Nullable="false" MaxLength="10" sap:label="Customer"/>
+            </EntityType>
+            <EntityType Name="AccountFactsheet" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="accountID"/>
+                </Key>
+                <Property Name="nextContact" Type="ZCRM_BUPA_ODATA_EM_SRV_02.Activity" Nullable="false"/>
+                <Property Name="lastContact" Type="ZCRM_BUPA_ODATA_EM_SRV_02.Activity" Nullable="false"/>
+                <Property Name="revenueCurrentYear" Type="ZCRM_BUPA_ODATA_EM_SRV_02.Amount" Nullable="false"/>
+                <Property Name="revenueLastYear" Type="ZCRM_BUPA_ODATA_EM_SRV_02.Amount" Nullable="false"/>
+                <Property Name="opportunityVolume" Type="ZCRM_BUPA_ODATA_EM_SRV_02.Amount" Nullable="false"/>
+                <Property Name="accountID" Type="Edm.String" Nullable="false" MaxLength="10" sap:label="BusinessPartner"/>
+                <Property Name="contactsCount" Type="Edm.Int32" sap:label="Number"/>
+                <Property Name="opportunitiesCount" Type="Edm.Int32" sap:label="Number"/>
+                <Property Name="futureActivitiesCount" Type="Edm.Int32" sap:label="Number"/>
+                <Property Name="leadsCount" Type="Edm.Int32" sap:label="Number"/>
+                <Property Name="tasksCount" Type="Edm.Int32" sap:label="Number"/>
+                <Property Name="notesCount" Type="Edm.Int32" sap:label="Number"/>
+                <Property Name="attachmentsCount" Type="Edm.Int32" sap:label="Number"/>
+                <NavigationProperty Name="Contacts" Relationship="ZCRM_BUPA_ODATA_EM_SRV_02.AccountFactsheet_To_M_Contact" FromRole="FromRole_AccountFactsheet_To_M_Contact" ToRole="ToRole_AccountFactsheet_To_M_Contact"/>
+                <NavigationProperty Name="Opportunities" Relationship="ZCRM_BUPA_ODATA_EM_SRV_02.AccountFactsheet_To_M_Opportunity" FromRole="FromRole_AccountFactsheet_To_M_Opportunity" ToRole="ToRole_AccountFactsheet_To_M_Opportunity"/>
+                <NavigationProperty Name="Leads" Relationship="ZCRM_BUPA_ODATA_EM_SRV_02.AccountFactsheet_To_M_Lead" FromRole="FromRole_AccountFactsheet_To_M_Lead" ToRole="ToRole_AccountFactsheet_To_M_Lead"/>
+                <NavigationProperty Name="Tasks" Relationship="ZCRM_BUPA_ODATA_EM_SRV_02.AccountFactsheet_To_M_Task" FromRole="FromRole_AccountFactsheet_To_M_Task" ToRole="ToRole_AccountFactsheet_To_M_Task"/>
+                <NavigationProperty Name="Attachments" Relationship="ZCRM_BUPA_ODATA_EM_SRV_02.AccountFactsheet_To_M_Attachment" FromRole="FromRole_AccountFactsheet_To_M_Attachment" ToRole="ToRole_AccountFactsheet_To_M_Attachment"/>
+                <NavigationProperty Name="Notes" Relationship="ZCRM_BUPA_ODATA_EM_SRV_02.AccountFactsheet_To_M_Note" FromRole="FromRole_AccountFactsheet_To_M_Note" ToRole="ToRole_AccountFactsheet_To_M_Note"/>
+            </EntityType>
+            <EntityType Name="ZCustomizingThirdType" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="zacc3rdtypeID"/>
+                </Key>
+                <Property Name="zacc3rdtypeID" Type="Edm.String" Nullable="false" MaxLength="5" sap:label="3rd Level Type" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="zacc3rdtype" Type="Edm.String" Nullable="false" MaxLength="20" sap:label="Short Description" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="zsubtypeID" Type="Edm.String" Nullable="false" MaxLength="5" sap:label="Subtype" sap:creatable="false" sap:updatable="false" sap:sortable="false"/>
+            </EntityType>
+            <EntityType Name="ZCustomizingAccStatus" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="zstatusID"/>
+                </Key>
+                <Property Name="zstatusID" Type="Edm.String" Nullable="false" MaxLength="2" sap:label="Status Number" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="zstatus" Type="Edm.String" Nullable="false" MaxLength="20" sap:label="Short Description" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+            </EntityType>
+            <EntityType Name="ZDepartment" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="partner"/>
+                    <PropertyRef Name="account"/>
+                </Key>
+                <Property Name="partner" Type="Edm.String" Nullable="false" MaxLength="10" sap:label="BusinessPartner" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="account" Type="Edm.String" Nullable="false" MaxLength="10" sap:label="BusinessPartner" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="name" Type="Edm.String" Nullable="false" MaxLength="50" sap:label="Description" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="function" Type="Edm.String" Nullable="false" MaxLength="20" sap:label="Short Description" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="department" Type="Edm.String" Nullable="false" MaxLength="20" sap:label="Short Description" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+            </EntityType>
+            <EntityType Name="ZCustomizingTerritory" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="territory"/>
+                </Key>
+                <Property Name="territory" Type="Edm.String" Nullable="false" MaxLength="14" sap:label="Territory" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="description" Type="Edm.String" Nullable="false" MaxLength="90" sap:label="Attr. Description" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="partner" Type="Edm.String" Nullable="false" MaxLength="10" sap:label="BusinessPartner" sap:creatable="false" sap:updatable="false" sap:sortable="false"/>
+            </EntityType>
+            <EntityType Name="ZCustomizingOtherFunction" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="function"/>
+                </Key>
+                <Property Name="function" Type="Edm.String" Nullable="false" MaxLength="3" sap:label="Other Function" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="description" Type="Edm.String" Nullable="false" MaxLength="90" sap:label="Attr. Description" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+            </EntityType>
+            <EntityType Name="ZCustomFields" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="zparentID"/>
+                    <PropertyRef Name="zcontactID"/>
+                </Key>
+                <Property Name="zparentID" Type="Edm.String" Nullable="false" MaxLength="10" sap:label="BusinessPartner" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="ztypeID" Type="Edm.String" Nullable="false" MaxLength="5" sap:label="Account Type ID" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="zdescription" Type="Edm.String" Nullable="false" MaxLength="20" sap:label="Short Description"/>
+                <Property Name="zsubtypeID" Type="Edm.String" Nullable="false" MaxLength="5" sap:label="Subtype" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="zsubDescription" Type="Edm.String" Nullable="false" MaxLength="20" sap:label="Short Description" sap:updatable="false"/>
+                <Property Name="zenrollment" Type="Edm.String" MaxLength="10" sap:label="Total A Enrollment" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="zinsVariations" Type="Edm.String" Nullable="false" MaxLength="255" sap:label="Institution Name Var" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="zacc3rdtype" Type="Edm.String" Nullable="false" MaxLength="5" sap:label="3rd Level Type" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="zacc3rdtypeDescr" Type="Edm.String" Nullable="false" MaxLength="20" sap:label="Short Description" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="zaccStatus" Type="Edm.String" Nullable="false" MaxLength="2" sap:label="Status Number" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="zaccStatusDescr" Type="Edm.String" Nullable="false" MaxLength="20" sap:label="Short Description" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="zContactSource" Type="Edm.String" Nullable="false" MaxLength="90" sap:label="Attr. Description" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="zTerritory" Type="Edm.String" Nullable="false" MaxLength="14" sap:label="Territory" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="zTerritoryDesc" Type="Edm.String" Nullable="false" MaxLength="90" sap:label="Attr. Description" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="zOtherFunction" Type="Edm.String" Nullable="false" MaxLength="3" sap:label="Other Function" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="zOtherFunctionDesc" Type="Edm.String" Nullable="false" MaxLength="90" sap:label="Attr. Description" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="zDepartment" Type="Edm.String" Nullable="false" MaxLength="10" sap:label="BusinessPartner" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="zDepartmentDesc" Type="Edm.String" Nullable="false" MaxLength="50" sap:label="Description" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="zcontactID" Type="Edm.String" Nullable="false" MaxLength="10" sap:label="BusinessPartner" sap:sortable="false" sap:filterable="false"/>
+            </EntityType>
+            <EntityType Name="ZCustomizingAccountType" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="ztypeID"/>
+                </Key>
+                <Property Name="ztypeID" Type="Edm.String" Nullable="false" MaxLength="5" sap:label="Type ID" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="zdescription" Type="Edm.String" Nullable="false" MaxLength="20" sap:label="Type" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="zbuType" Type="Edm.String" Nullable="false" MaxLength="1" sap:label="Partner cat." sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+            </EntityType>
+            <EntityType Name="ZCustomizingSubtype" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="zsubtypeID"/>
+                </Key>
+                <Property Name="zsubtypeID" Type="Edm.String" Nullable="false" MaxLength="5" sap:label="Subtype" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="zdescription" Type="Edm.String" Nullable="false" MaxLength="20" sap:label="Short Description" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="ztypeID" Type="Edm.String" Nullable="false" MaxLength="5" sap:label="Account Type ID" sap:creatable="false" sap:updatable="false" sap:sortable="false"/>
+            </EntityType>
+            <EntityType Name="ZModule" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="account"/>
+                    <PropertyRef Name="moduleID"/>
+                </Key>
+                <Property Name="account" Type="Edm.String" Nullable="false" MaxLength="10" sap:label="Module ID" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="moduleClassification" Type="Edm.String" Nullable="false" MaxLength="80" sap:label="Frequency Descriptio" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="moduleID" Type="Edm.String" Nullable="false" MaxLength="10" sap:label="Module ID" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="moduleName" Type="Edm.String" Nullable="false" MaxLength="60" sap:label="Name of module" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="uniModuleName" Type="Edm.String" Nullable="false" MaxLength="80" sap:label="University Name UC" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="status" Type="Edm.String" Nullable="false" MaxLength="1" sap:label="Status Active/Inacti" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="enrollment" Type="Edm.Int32" Nullable="false" sap:label="Total A Enrollment" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+            </EntityType>
+            <EntityType Name="ZCustomizingSampleStatus" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="status"/>
+                </Key>
+                <Property Name="status" Type="Edm.String" Nullable="false" MaxLength="2" sap:label="Sampling/ICS status" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="description" Type="Edm.String" Nullable="false" MaxLength="90" sap:label="Attr. Description" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+            </EntityType>
+            <EntityType Name="ZCustomizingAccIndStatus" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="zstatusID"/>
+                </Key>
+                <Property Name="zstatusID" Type="Edm.String" Nullable="false" MaxLength="2" sap:label="Status Number" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="zstatus" Type="Edm.String" Nullable="false" MaxLength="20" sap:label="Short Description" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+            </EntityType>
+            <ComplexType Name="custAcaTitle">
+                <Property Name="title" Type="Edm.String" MaxLength="4" sap:label="Academic Title"/>
+                <Property Name="titleDescription" Type="Edm.String" MaxLength="40" sap:label="Ac.title descr."/>
+            </ComplexType>
+            <ComplexType Name="custTitle">
+                <Property Name="title" Type="Edm.String" MaxLength="4" sap:label="Title"/>
+                <Property Name="titleDescription" Type="Edm.String" MaxLength="30" sap:label="Title"/>
+                <Property Name="person" Type="Edm.String" MaxLength="1" sap:label="Person title"/>
+                <Property Name="organization" Type="Edm.String" MaxLength="1" sap:label="Organization"/>
+                <Property Name="group" Type="Edm.String" MaxLength="1" sap:label="Group"/>
+            </ComplexType>
+            <ComplexType Name="custCountry">
+                <Property Name="countryID" Type="Edm.String" MaxLength="3" sap:label="Country"/>
+                <Property Name="country" Type="Edm.String" MaxLength="15" sap:label="Name"/>
+            </ComplexType>
+            <ComplexType Name="custRegion">
+                <Property Name="regionID" Type="Edm.String" MaxLength="3" sap:label="Region"/>
+                <Property Name="region" Type="Edm.String" MaxLength="20" sap:label="Description"/>
+            </ComplexType>
+            <ComplexType Name="custRating">
+                <Property Name="ratingID" Type="Edm.String" MaxLength="2" sap:label="Classification"/>
+                <Property Name="ratingText" Type="Edm.String" MaxLength="20" sap:label="Description"/>
+            </ComplexType>
+            <ComplexType Name="Activity">
+                <Property Name="fromDate" Type="Edm.DateTime" Precision="0" sap:label="Time Stamp"/>
+                <Property Name="toDate" Type="Edm.DateTime" Precision="0" sap:label="Time Stamp"/>
+                <Property Name="description" Type="Edm.String" MaxLength="40" sap:label="Description"/>
+            </ComplexType>
+            <ComplexType Name="Amount">
+                <Property Name="amount" Type="Edm.Decimal" Precision="31" Scale="2" sap:label="Amount"/>
+                <Property Name="currency" Type="Edm.String" MaxLength="5" sap:label="Currency" sap:semantics="currency-code"/>
+            </ComplexType>
+            <ComplexType Name="ActionResult">
+                <Property Name="ActionSuccessful" Type="Edm.String" MaxLength="1" sap:label="X Flag" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Message" Type="Edm.String" sap:label="String" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+            </ComplexType>
+            <Association Name="CustomizingMarketingAttribute_To_M_Custo" sap:content-version="1">
+                <End Type="ZCRM_BUPA_ODATA_EM_SRV_02.CustomizingMarketingAttribute" Multiplicity="1" Role="FromRole_CustomizingMarketingAttribute_To_M_Custo"/>
+                <End Type="ZCRM_BUPA_ODATA_EM_SRV_02.CustomizingMarketingAttrValue" Multiplicity="*" Role="ToRole_CustomizingMarketingAttribute_To_M_Custo"/>
+            </Association>
+            <Association Name="Employee_To_0_Address" sap:content-version="1">
+                <End Type="ZCRM_BUPA_ODATA_EM_SRV_02.Employee" Multiplicity="1" Role="FromRole_Employee_To_0_Address"/>
+                <End Type="ZCRM_BUPA_ODATA_EM_SRV_02.Address" Multiplicity="0..1" Role="ToRole_Employee_To_0_Address"/>
+            </Association>
+            <Association Name="Employee_To_0_Account" sap:content-version="1">
+                <End Type="ZCRM_BUPA_ODATA_EM_SRV_02.Employee" Multiplicity="1" Role="FromRole_Employee_To_0_Account"/>
+                <End Type="ZCRM_BUPA_ODATA_EM_SRV_02.Account" Multiplicity="0..1" Role="ToRole_Employee_To_0_Account"/>
+            </Association>
+            <Association Name="Employee_To_0_Attachment" sap:content-version="1">
+                <End Type="ZCRM_BUPA_ODATA_EM_SRV_02.Employee" Multiplicity="1" Role="FromRole_Employee_To_0_Attachment"/>
+                <End Type="ZCRM_BUPA_ODATA_EM_SRV_02.Attachment" Multiplicity="0..1" Role="ToRole_Employee_To_0_Attachment"/>
+            </Association>
+            <Association Name="Lead_To_0_Employee" sap:content-version="1">
+                <End Type="ZCRM_BUPA_ODATA_EM_SRV_02.Lead" Multiplicity="1" Role="FromRole_Lead_To_0_Employee"/>
+                <End Type="ZCRM_BUPA_ODATA_EM_SRV_02.Employee" Multiplicity="0..1" Role="ToRole_Lead_To_0_Employee"/>
+            </Association>
+            <Association Name="Opportunity_To_0_Contact" sap:content-version="1">
+                <End Type="ZCRM_BUPA_ODATA_EM_SRV_02.Opportunity" Multiplicity="1" Role="FromRole_Opportunity_To_0_Contact"/>
+                <End Type="ZCRM_BUPA_ODATA_EM_SRV_02.Contact" Multiplicity="0..1" Role="ToRole_Opportunity_To_0_Contact"/>
+            </Association>
+            <Association Name="Account_To_0_Contact" sap:content-version="1">
+                <End Type="ZCRM_BUPA_ODATA_EM_SRV_02.Account" Multiplicity="1" Role="FromRole_Account_To_0_Contact"/>
+                <End Type="ZCRM_BUPA_ODATA_EM_SRV_02.Contact" Multiplicity="0..1" Role="ToRole_Account_To_0_Contact"/>
+            </Association>
+            <Association Name="Account_To_M_Contact" sap:content-version="1">
+                <End Type="ZCRM_BUPA_ODATA_EM_SRV_02.Account" Multiplicity="1" Role="FromRole_Account_To_M_Contact"/>
+                <End Type="ZCRM_BUPA_ODATA_EM_SRV_02.Contact" Multiplicity="*" Role="ToRole_Account_To_M_Contact"/>
+            </Association>
+            <Association Name="Account_To_0_Classification" sap:content-version="1">
+                <End Type="ZCRM_BUPA_ODATA_EM_SRV_02.Account" Multiplicity="1" Role="FromRole_Account_To_0_Classification"/>
+                <End Type="ZCRM_BUPA_ODATA_EM_SRV_02.Classification" Multiplicity="0..1" Role="ToRole_Account_To_0_Classification"/>
+            </Association>
+            <Association Name="Account_To_0_Attachment" sap:content-version="1">
+                <End Type="ZCRM_BUPA_ODATA_EM_SRV_02.Account" Multiplicity="1" Role="FromRole_Account_To_0_Attachment"/>
+                <End Type="ZCRM_BUPA_ODATA_EM_SRV_02.Attachment" Multiplicity="0..1" Role="ToRole_Account_To_0_Attachment"/>
+            </Association>
+            <Association Name="Account_To_0_Address" sap:content-version="1">
+                <End Type="ZCRM_BUPA_ODATA_EM_SRV_02.Account" Multiplicity="1" Role="FromRole_Account_To_0_Address"/>
+                <End Type="ZCRM_BUPA_ODATA_EM_SRV_02.Address" Multiplicity="0..1" Role="ToRole_Account_To_0_Address"/>
+            </Association>
+            <Association Name="Account_To_M_Address" sap:content-version="1">
+                <End Type="ZCRM_BUPA_ODATA_EM_SRV_02.Account" Multiplicity="1" Role="FromRole_Account_To_M_Address"/>
+                <End Type="ZCRM_BUPA_ODATA_EM_SRV_02.Address" Multiplicity="*" Role="ToRole_Account_To_M_Address"/>
+            </Association>
+            <Association Name="Account_To_M_MarketingAttribute" sap:content-version="1">
+                <End Type="ZCRM_BUPA_ODATA_EM_SRV_02.Account" Multiplicity="1" Role="FromRole_Account_To_M_MarketingAttribute"/>
+                <End Type="ZCRM_BUPA_ODATA_EM_SRV_02.MarketingAttribute" Multiplicity="*" Role="ToRole_Account_To_M_MarketingAttribute"/>
+            </Association>
+            <Association Name="Account_To_M_Opportunity" sap:content-version="1">
+                <End Type="ZCRM_BUPA_ODATA_EM_SRV_02.Account" Multiplicity="1" Role="FromRole_Account_To_M_Opportunity"/>
+                <End Type="ZCRM_BUPA_ODATA_EM_SRV_02.Opportunity" Multiplicity="*" Role="ToRole_Account_To_M_Opportunity"/>
+            </Association>
+            <Association Name="Account_To_M_Lead" sap:content-version="1">
+                <End Type="ZCRM_BUPA_ODATA_EM_SRV_02.Account" Multiplicity="1" Role="FromRole_Account_To_M_Lead"/>
+                <End Type="ZCRM_BUPA_ODATA_EM_SRV_02.Lead" Multiplicity="*" Role="ToRole_Account_To_M_Lead"/>
+            </Association>
+            <Association Name="Account_To_M_Attachment" sap:content-version="1">
+                <End Type="ZCRM_BUPA_ODATA_EM_SRV_02.Account" Multiplicity="1" Role="FromRole_Account_To_M_Attachment"/>
+                <End Type="ZCRM_BUPA_ODATA_EM_SRV_02.Attachment" Multiplicity="*" Role="ToRole_Account_To_M_Attachment"/>
+            </Association>
+            <Association Name="Account_To_M_Note" sap:content-version="1">
+                <End Type="ZCRM_BUPA_ODATA_EM_SRV_02.Account" Multiplicity="1" Role="FromRole_Account_To_M_Note"/>
+                <End Type="ZCRM_BUPA_ODATA_EM_SRV_02.Note" Multiplicity="*" Role="ToRole_Account_To_M_Note"/>
+            </Association>
+            <Association Name="Account_To_0_Employee" sap:content-version="1">
+                <End Type="ZCRM_BUPA_ODATA_EM_SRV_02.Account" Multiplicity="1" Role="FromRole_Account_To_0_Employee"/>
+                <End Type="ZCRM_BUPA_ODATA_EM_SRV_02.Employee" Multiplicity="0..1" Role="ToRole_Account_To_0_Employee"/>
+            </Association>
+            <Association Name="Account_To_M_Employee" sap:content-version="1">
+                <End Type="ZCRM_BUPA_ODATA_EM_SRV_02.Account" Multiplicity="1" Role="FromRole_Account_To_M_Employee"/>
+                <End Type="ZCRM_BUPA_ODATA_EM_SRV_02.Employee" Multiplicity="*" Role="ToRole_Account_To_M_Employee"/>
+            </Association>
+            <Association Name="Account_To_M_Appointment" sap:content-version="1">
+                <End Type="ZCRM_BUPA_ODATA_EM_SRV_02.Account" Multiplicity="1" Role="FromRole_Account_To_M_Appointment"/>
+                <End Type="ZCRM_BUPA_ODATA_EM_SRV_02.Appointment" Multiplicity="*" Role="ToRole_Account_To_M_Appointment"/>
+            </Association>
+            <Association Name="Account_To_M_Task" sap:content-version="1">
+                <End Type="ZCRM_BUPA_ODATA_EM_SRV_02.Account" Multiplicity="1" Role="FromRole_Account_To_M_Task"/>
+                <End Type="ZCRM_BUPA_ODATA_EM_SRV_02.Task" Multiplicity="*" Role="ToRole_Account_To_M_Task"/>
+            </Association>
+            <Association Name="Account_To_M_Relationship" sap:content-version="1">
+                <End Type="ZCRM_BUPA_ODATA_EM_SRV_02.Account" Multiplicity="1" Role="FromRole_Account_To_M_Relationship"/>
+                <End Type="ZCRM_BUPA_ODATA_EM_SRV_02.Relationship" Multiplicity="*" Role="ToRole_Account_To_M_Relationship"/>
+            </Association>
+            <Association Name="Account_To_0_Relationship" sap:content-version="1">
+                <End Type="ZCRM_BUPA_ODATA_EM_SRV_02.Account" Multiplicity="1" Role="FromRole_Account_To_0_Relationship"/>
+                <End Type="ZCRM_BUPA_ODATA_EM_SRV_02.Relationship" Multiplicity="0..1" Role="ToRole_Account_To_0_Relationship"/>
+            </Association>
+            <Association Name="Account_To_0_Customer" sap:content-version="1">
+                <End Type="ZCRM_BUPA_ODATA_EM_SRV_02.Account" Multiplicity="1" Role="FromRole_Account_To_0_Customer"/>
+                <End Type="ZCRM_BUPA_ODATA_EM_SRV_02.Customer" Multiplicity="0..1" Role="ToRole_Account_To_0_Customer"/>
+            </Association>
+            <Association Name="Account_To_1_AccountFactsheet" sap:content-version="1">
+                <End Type="ZCRM_BUPA_ODATA_EM_SRV_02.Account" Multiplicity="1" Role="FromRole_Account_To_1_AccountFactsheet"/>
+                <End Type="ZCRM_BUPA_ODATA_EM_SRV_02.AccountFactsheet" Multiplicity="1" Role="ToRole_Account_To_1_AccountFactsheet"/>
+            </Association>
+            <Association Name="ZAccount_To_M_CustomFields" sap:content-version="1">
+                <End Type="ZCRM_BUPA_ODATA_EM_SRV_02.Account" Multiplicity="1" Role="FromRole_ZAccount_To_M_CustomFields"/>
+                <End Type="ZCRM_BUPA_ODATA_EM_SRV_02.ZCustomFields" Multiplicity="*" Role="ToRole_ZAccount_To_M_CustomFields"/>
+                <ReferentialConstraint>
+                    <Principal Role="FromRole_ZAccount_To_M_CustomFields">
+                        <PropertyRef Name="accountID"/>
+                    </Principal>
+                    <Dependent Role="ToRole_ZAccount_To_M_CustomFields">
+                        <PropertyRef Name="zparentID"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="ZAccount_To_M_Cust_Thirdtype" sap:content-version="1">
+                <End Type="ZCRM_BUPA_ODATA_EM_SRV_02.Account" Multiplicity="1" Role="FromRole_ZAccount_To_M_Cust_Thirdtype"/>
+                <End Type="ZCRM_BUPA_ODATA_EM_SRV_02.ZCustomizingThirdType" Multiplicity="*" Role="ToRole_ZAccount_To_M_Cust_Thirdtype"/>
+            </Association>
+            <Association Name="ZAccount_To_M_Cust_AccStatus" sap:content-version="1">
+                <End Type="ZCRM_BUPA_ODATA_EM_SRV_02.Account" Multiplicity="1" Role="FromRole_ZAccount_To_M_Cust_AccStatus"/>
+                <End Type="ZCRM_BUPA_ODATA_EM_SRV_02.ZCustomizingAccStatus" Multiplicity="*" Role="ToRole_ZAccount_To_M_Cust_AccStatus"/>
+            </Association>
+            <Association Name="ZAccount_To_M_Departments" sap:content-version="1">
+                <End Type="ZCRM_BUPA_ODATA_EM_SRV_02.Account" Multiplicity="1" Role="FromRole_ZAccount_To_M_Departments"/>
+                <End Type="ZCRM_BUPA_ODATA_EM_SRV_02.ZDepartment" Multiplicity="*" Role="ToRole_ZAccount_To_M_Departments"/>
+                <ReferentialConstraint>
+                    <Principal Role="FromRole_ZAccount_To_M_Departments">
+                        <PropertyRef Name="accountID"/>
+                    </Principal>
+                    <Dependent Role="ToRole_ZAccount_To_M_Departments">
+                        <PropertyRef Name="account"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="ZAccount_To_0_CustomFields" sap:content-version="1">
+                <End Type="ZCRM_BUPA_ODATA_EM_SRV_02.Account" Multiplicity="1" Role="FromRole_ZAccount_To_0_CustomFields"/>
+                <End Type="ZCRM_BUPA_ODATA_EM_SRV_02.ZCustomFields" Multiplicity="0..1" Role="ToRole_ZAccount_To_0_CustomFields"/>
+                <ReferentialConstraint>
+                    <Principal Role="FromRole_ZAccount_To_0_CustomFields">
+                        <PropertyRef Name="accountID"/>
+                    </Principal>
+                    <Dependent Role="ToRole_ZAccount_To_0_CustomFields">
+                        <PropertyRef Name="zparentID"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="ZAccount_To_M_Cust_AccountType" sap:content-version="1">
+                <End Type="ZCRM_BUPA_ODATA_EM_SRV_02.Account" Multiplicity="1" Role="FromRole_ZAccount_To_M_Cust_AccountType"/>
+                <End Type="ZCRM_BUPA_ODATA_EM_SRV_02.ZCustomizingAccountType" Multiplicity="*" Role="ToRole_ZAccount_To_M_Cust_AccountType"/>
+            </Association>
+            <Association Name="ZAccount_To_M_Cust_Subtype" sap:content-version="1">
+                <End Type="ZCRM_BUPA_ODATA_EM_SRV_02.Account" Multiplicity="1" Role="FromRole_ZAccount_To_M_Cust_Subtype"/>
+                <End Type="ZCRM_BUPA_ODATA_EM_SRV_02.ZCustomizingSubtype" Multiplicity="*" Role="ToRole_ZAccount_To_M_Cust_Subtype"/>
+            </Association>
+            <Association Name="ZAccount_To_0_Cust_AccStatus" sap:content-version="1">
+                <End Type="ZCRM_BUPA_ODATA_EM_SRV_02.Account" Multiplicity="1" Role="FromRole_ZAccount_To_0_Cust_AccStatus"/>
+                <End Type="ZCRM_BUPA_ODATA_EM_SRV_02.ZCustomizingAccStatus" Multiplicity="0..1" Role="ToRole_ZAccount_To_0_Cust_AccStatus"/>
+            </Association>
+            <Association Name="ZAccount_To_M_Modules" sap:content-version="1">
+                <End Type="ZCRM_BUPA_ODATA_EM_SRV_02.Account" Multiplicity="1" Role="FromRole_ZAccount_To_M_Modules"/>
+                <End Type="ZCRM_BUPA_ODATA_EM_SRV_02.ZModule" Multiplicity="*" Role="ToRole_ZAccount_To_M_Modules"/>
+                <ReferentialConstraint>
+                    <Principal Role="FromRole_ZAccount_To_M_Modules">
+                        <PropertyRef Name="accountID"/>
+                    </Principal>
+                    <Dependent Role="ToRole_ZAccount_To_M_Modules">
+                        <PropertyRef Name="account"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="AccountFactsheet_To_M_Contact" sap:content-version="1">
+                <End Type="ZCRM_BUPA_ODATA_EM_SRV_02.AccountFactsheet" Multiplicity="1" Role="FromRole_AccountFactsheet_To_M_Contact"/>
+                <End Type="ZCRM_BUPA_ODATA_EM_SRV_02.Contact" Multiplicity="*" Role="ToRole_AccountFactsheet_To_M_Contact"/>
+            </Association>
+            <Association Name="AccountFactsheet_To_M_Opportunity" sap:content-version="1">
+                <End Type="ZCRM_BUPA_ODATA_EM_SRV_02.AccountFactsheet" Multiplicity="1" Role="FromRole_AccountFactsheet_To_M_Opportunity"/>
+                <End Type="ZCRM_BUPA_ODATA_EM_SRV_02.Opportunity" Multiplicity="*" Role="ToRole_AccountFactsheet_To_M_Opportunity"/>
+            </Association>
+            <Association Name="AccountFactsheet_To_M_Lead" sap:content-version="1">
+                <End Type="ZCRM_BUPA_ODATA_EM_SRV_02.AccountFactsheet" Multiplicity="1" Role="FromRole_AccountFactsheet_To_M_Lead"/>
+                <End Type="ZCRM_BUPA_ODATA_EM_SRV_02.Lead" Multiplicity="*" Role="ToRole_AccountFactsheet_To_M_Lead"/>
+            </Association>
+            <Association Name="AccountFactsheet_To_M_Task" sap:content-version="1">
+                <End Type="ZCRM_BUPA_ODATA_EM_SRV_02.AccountFactsheet" Multiplicity="1" Role="FromRole_AccountFactsheet_To_M_Task"/>
+                <End Type="ZCRM_BUPA_ODATA_EM_SRV_02.Task" Multiplicity="*" Role="ToRole_AccountFactsheet_To_M_Task"/>
+            </Association>
+            <Association Name="AccountFactsheet_To_M_Attachment" sap:content-version="1">
+                <End Type="ZCRM_BUPA_ODATA_EM_SRV_02.AccountFactsheet" Multiplicity="1" Role="FromRole_AccountFactsheet_To_M_Attachment"/>
+                <End Type="ZCRM_BUPA_ODATA_EM_SRV_02.Attachment" Multiplicity="*" Role="ToRole_AccountFactsheet_To_M_Attachment"/>
+            </Association>
+            <Association Name="AccountFactsheet_To_M_Note" sap:content-version="1">
+                <End Type="ZCRM_BUPA_ODATA_EM_SRV_02.AccountFactsheet" Multiplicity="1" Role="FromRole_AccountFactsheet_To_M_Note"/>
+                <End Type="ZCRM_BUPA_ODATA_EM_SRV_02.Note" Multiplicity="*" Role="ToRole_AccountFactsheet_To_M_Note"/>
+            </Association>
+            <Association Name="Contact_To_0_Address" sap:content-version="1">
+                <End Type="ZCRM_BUPA_ODATA_EM_SRV_02.Contact" Multiplicity="1" Role="FromRole_Contact_To_0_Address"/>
+                <End Type="ZCRM_BUPA_ODATA_EM_SRV_02.Address" Multiplicity="0..1" Role="ToRole_Contact_To_0_Address"/>
+            </Association>
+            <Association Name="Contact_To_0_Attachment" sap:content-version="1">
+                <End Type="ZCRM_BUPA_ODATA_EM_SRV_02.Contact" Multiplicity="1" Role="FromRole_Contact_To_0_Attachment"/>
+                <End Type="ZCRM_BUPA_ODATA_EM_SRV_02.Attachment" Multiplicity="0..1" Role="ToRole_Contact_To_0_Attachment"/>
+            </Association>
+            <Association Name="Contact_To_M_Note" sap:content-version="1">
+                <End Type="ZCRM_BUPA_ODATA_EM_SRV_02.Contact" Multiplicity="1" Role="FromRole_Contact_To_M_Note"/>
+                <End Type="ZCRM_BUPA_ODATA_EM_SRV_02.Note" Multiplicity="*" Role="ToRole_Contact_To_M_Note"/>
+            </Association>
+            <Association Name="Contact_To_M_Attachment" sap:content-version="1">
+                <End Type="ZCRM_BUPA_ODATA_EM_SRV_02.Contact" Multiplicity="1" Role="FromRole_Contact_To_M_Attachment"/>
+                <End Type="ZCRM_BUPA_ODATA_EM_SRV_02.Attachment" Multiplicity="*" Role="ToRole_Contact_To_M_Attachment"/>
+            </Association>
+            <Association Name="Contact_To_0_Account" sap:content-version="1">
+                <End Type="ZCRM_BUPA_ODATA_EM_SRV_02.Contact" Multiplicity="1" Role="FromRole_Contact_To_0_Account"/>
+                <End Type="ZCRM_BUPA_ODATA_EM_SRV_02.Account" Multiplicity="0..1" Role="ToRole_Contact_To_0_Account"/>
+            </Association>
+            <Association Name="ZContact_To_M_CustomFields" sap:content-version="1">
+                <End Type="ZCRM_BUPA_ODATA_EM_SRV_02.Contact" Multiplicity="1" Role="FromRole_ZContact_To_M_CustomFields"/>
+                <End Type="ZCRM_BUPA_ODATA_EM_SRV_02.ZCustomFields" Multiplicity="0..1" Role="ToRole_ZContact_To_M_CustomFields"/>
+                <ReferentialConstraint>
+                    <Principal Role="FromRole_ZContact_To_M_CustomFields">
+                        <PropertyRef Name="accountID"/>
+                        <PropertyRef Name="contactID"/>
+                    </Principal>
+                    <Dependent Role="ToRole_ZContact_To_M_CustomFields">
+                        <PropertyRef Name="zparentID"/>
+                        <PropertyRef Name="zcontactID"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <EntityContainer Name="ZCRM_BUPA_ODATA_EM_SRV_02_Entities" m:IsDefaultEntityContainer="true" sap:supported-formats="atom json xlsx">
+                <EntitySet Name="CustomizingTaskTypeCollection" EntityType="ZCRM_BUPA_ODATA_EM_SRV_02.CustomizingTaskType" sap:content-version="1"/>
+                <EntitySet Name="CustomizingTaskPriorityCollection" EntityType="ZCRM_BUPA_ODATA_EM_SRV_02.CustomizingTaskPriority" sap:content-version="1"/>
+                <EntitySet Name="CustomizingTaskStatusCollection" EntityType="ZCRM_BUPA_ODATA_EM_SRV_02.CustomizingTaskStatus" sap:content-version="1"/>
+                <EntitySet Name="CustomizingAppointmentTypeCollection" EntityType="ZCRM_BUPA_ODATA_EM_SRV_02.CustomizingAppointmentType" sap:content-version="1"/>
+                <EntitySet Name="CustomizingOpportunityTypeCollection" EntityType="ZCRM_BUPA_ODATA_EM_SRV_02.CustomizingOpportunityType" sap:content-version="1"/>
+                <EntitySet Name="ContactCollection" EntityType="ZCRM_BUPA_ODATA_EM_SRV_02.Contact" sap:content-version="1"/>
+                <EntitySet Name="AddressCollection" EntityType="ZCRM_BUPA_ODATA_EM_SRV_02.Address" sap:content-version="1"/>
+                <EntitySet Name="AttachmentCollection" EntityType="ZCRM_BUPA_ODATA_EM_SRV_02.Attachment" sap:content-version="1"/>
+                <EntitySet Name="NoteCollection" EntityType="ZCRM_BUPA_ODATA_EM_SRV_02.Note" sap:content-version="1"/>
+                <EntitySet Name="AccountCollection" EntityType="ZCRM_BUPA_ODATA_EM_SRV_02.Account" sap:content-version="1"/>
+                <EntitySet Name="ClassificationCollection" EntityType="ZCRM_BUPA_ODATA_EM_SRV_02.Classification" sap:content-version="1"/>
+                <EntitySet Name="MarketingAttributeCollection" EntityType="ZCRM_BUPA_ODATA_EM_SRV_02.MarketingAttribute" sap:content-version="1"/>
+                <EntitySet Name="OpportunityCollection" EntityType="ZCRM_BUPA_ODATA_EM_SRV_02.Opportunity" sap:content-version="1"/>
+                <EntitySet Name="LeadCollection" EntityType="ZCRM_BUPA_ODATA_EM_SRV_02.Lead" sap:content-version="1"/>
+                <EntitySet Name="AppointmentCollection" EntityType="ZCRM_BUPA_ODATA_EM_SRV_02.Appointment" sap:content-version="1"/>
+                <EntitySet Name="TaskCollection" EntityType="ZCRM_BUPA_ODATA_EM_SRV_02.Task" sap:content-version="1"/>
+                <EntitySet Name="RelationshipCollection" EntityType="ZCRM_BUPA_ODATA_EM_SRV_02.Relationship" sap:content-version="1"/>
+                <EntitySet Name="CustomerCollection" EntityType="ZCRM_BUPA_ODATA_EM_SRV_02.Customer" sap:content-version="1"/>
+                <EntitySet Name="AccountFactsheetCollection" EntityType="ZCRM_BUPA_ODATA_EM_SRV_02.AccountFactsheet" sap:content-version="1"/>
+                <EntitySet Name="ZCustomizingThirdTypeCollection" EntityType="ZCRM_BUPA_ODATA_EM_SRV_02.ZCustomizingThirdType" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:addressable="false" sap:content-version="1"/>
+                <EntitySet Name="ZCustomizingAccStatusCollection" EntityType="ZCRM_BUPA_ODATA_EM_SRV_02.ZCustomizingAccStatus" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:addressable="false" sap:content-version="1"/>
+                <EntitySet Name="ZDepartmentSet" EntityType="ZCRM_BUPA_ODATA_EM_SRV_02.ZDepartment" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:addressable="false" sap:content-version="1"/>
+                <EntitySet Name="ZCustomizingTerritorySet" EntityType="ZCRM_BUPA_ODATA_EM_SRV_02.ZCustomizingTerritory" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:addressable="false" sap:content-version="1"/>
+                <EntitySet Name="ZCustomizingOtherFunctionCollection" EntityType="ZCRM_BUPA_ODATA_EM_SRV_02.ZCustomizingOtherFunction" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:addressable="false" sap:content-version="1"/>
+                <EntitySet Name="ZCustomFieldsCollection" EntityType="ZCRM_BUPA_ODATA_EM_SRV_02.ZCustomFields" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:addressable="false" sap:content-version="1"/>
+                <EntitySet Name="ZCustomizingAccountTypeCollection" EntityType="ZCRM_BUPA_ODATA_EM_SRV_02.ZCustomizingAccountType" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:addressable="false" sap:content-version="1"/>
+                <EntitySet Name="ZCustomizingSubtypeCollection" EntityType="ZCRM_BUPA_ODATA_EM_SRV_02.ZCustomizingSubtype" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:addressable="false" sap:content-version="1"/>
+                <EntitySet Name="ZModuleSet" EntityType="ZCRM_BUPA_ODATA_EM_SRV_02.ZModule" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:addressable="false" sap:content-version="1"/>
+                <EntitySet Name="ZCustomizingSampleStatusCollection" EntityType="ZCRM_BUPA_ODATA_EM_SRV_02.ZCustomizingSampleStatus" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:addressable="false" sap:content-version="1"/>
+                <EntitySet Name="ZCustomizingAccIndStatusCollection" EntityType="ZCRM_BUPA_ODATA_EM_SRV_02.ZCustomizingAccIndStatus" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:addressable="false" sap:content-version="1"/>
+                <EntitySet Name="SubscriptionCollection" EntityType="ZCRM_BUPA_ODATA_EM_SRV_02.Subscription" sap:content-version="1"/>
+                <EntitySet Name="NotificationCollection" EntityType="ZCRM_BUPA_ODATA_EM_SRV_02.Notification" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:addressable="false" sap:content-version="1"/>
+                <EntitySet Name="EmployeeCollection" EntityType="ZCRM_BUPA_ODATA_EM_SRV_02.Employee" sap:content-version="1"/>
+                <EntitySet Name="CustomizingAcademicTitleCollection" EntityType="ZCRM_BUPA_ODATA_EM_SRV_02.CustomizingAcademicTitle" sap:content-version="1"/>
+                <EntitySet Name="CustomizingTitleCollection" EntityType="ZCRM_BUPA_ODATA_EM_SRV_02.CustomizingTitle" sap:content-version="1"/>
+                <EntitySet Name="CustomizingRatingCollection" EntityType="ZCRM_BUPA_ODATA_EM_SRV_02.CustomizingRating" sap:content-version="1"/>
+                <EntitySet Name="CustomizingCountryCollection" EntityType="ZCRM_BUPA_ODATA_EM_SRV_02.CustomizingCountry" sap:content-version="1"/>
+                <EntitySet Name="CustomizingRegionCollection" EntityType="ZCRM_BUPA_ODATA_EM_SRV_02.CustomizingRegion" sap:content-version="1"/>
+                <EntitySet Name="CustomizingMarketingAttrSetCollection" EntityType="ZCRM_BUPA_ODATA_EM_SRV_02.CustomizingMarketingAttrSet" sap:content-version="1"/>
+                <EntitySet Name="CustomizingMarketingAttributeCollection" EntityType="ZCRM_BUPA_ODATA_EM_SRV_02.CustomizingMarketingAttribute" sap:content-version="1"/>
+                <EntitySet Name="CustomizingMarketingAttrValueCollection" EntityType="ZCRM_BUPA_ODATA_EM_SRV_02.CustomizingMarketingAttrValue" sap:content-version="1"/>
+                <AssociationSet Name="Account_To_0_Employee_AssocSet" Association="ZCRM_BUPA_ODATA_EM_SRV_02.Account_To_0_Employee" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="AccountCollection" Role="FromRole_Account_To_0_Employee"/>
+                    <End EntitySet="EmployeeCollection" Role="ToRole_Account_To_0_Employee"/>
+                </AssociationSet>
+                <AssociationSet Name="Account_To_M_Task_AssocSet" Association="ZCRM_BUPA_ODATA_EM_SRV_02.Account_To_M_Task" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="AccountCollection" Role="FromRole_Account_To_M_Task"/>
+                    <End EntitySet="TaskCollection" Role="ToRole_Account_To_M_Task"/>
+                </AssociationSet>
+                <AssociationSet Name="ZContact_To_M_CustomFieldsSet" Association="ZCRM_BUPA_ODATA_EM_SRV_02.ZContact_To_M_CustomFields" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="ContactCollection" Role="FromRole_ZContact_To_M_CustomFields"/>
+                    <End EntitySet="ZCustomFieldsCollection" Role="ToRole_ZContact_To_M_CustomFields"/>
+                </AssociationSet>
+                <AssociationSet Name="CustomizingMarketingAttribute_To_M_Custo" Association="ZCRM_BUPA_ODATA_EM_SRV_02.CustomizingMarketingAttribute_To_M_Custo" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="CustomizingMarketingAttributeCollection" Role="FromRole_CustomizingMarketingAttribute_To_M_Custo"/>
+                    <End EntitySet="CustomizingMarketingAttrValueCollection" Role="ToRole_CustomizingMarketingAttribute_To_M_Custo"/>
+                </AssociationSet>
+                <AssociationSet Name="Account_To_M_Employee_AssocSet" Association="ZCRM_BUPA_ODATA_EM_SRV_02.Account_To_M_Employee" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="AccountCollection" Role="FromRole_Account_To_M_Employee"/>
+                    <End EntitySet="EmployeeCollection" Role="ToRole_Account_To_M_Employee"/>
+                </AssociationSet>
+                <AssociationSet Name="ZAccount_To_M_CustomFieldsSet" Association="ZCRM_BUPA_ODATA_EM_SRV_02.ZAccount_To_M_CustomFields" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="AccountCollection" Role="FromRole_ZAccount_To_M_CustomFields"/>
+                    <End EntitySet="ZCustomFieldsCollection" Role="ToRole_ZAccount_To_M_CustomFields"/>
+                </AssociationSet>
+                <AssociationSet Name="Contact_To_0_Account_AssocSet" Association="ZCRM_BUPA_ODATA_EM_SRV_02.Contact_To_0_Account" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="ContactCollection" Role="FromRole_Contact_To_0_Account"/>
+                    <End EntitySet="AccountCollection" Role="ToRole_Contact_To_0_Account"/>
+                </AssociationSet>
+                <AssociationSet Name="AccountFactsheet_To_M_Note_AssocSet" Association="ZCRM_BUPA_ODATA_EM_SRV_02.AccountFactsheet_To_M_Note" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="AccountFactsheetCollection" Role="FromRole_AccountFactsheet_To_M_Note"/>
+                    <End EntitySet="NoteCollection" Role="ToRole_AccountFactsheet_To_M_Note"/>
+                </AssociationSet>
+                <AssociationSet Name="Account_To_M_Relationship_AssocSet" Association="ZCRM_BUPA_ODATA_EM_SRV_02.Account_To_M_Relationship" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="AccountCollection" Role="FromRole_Account_To_M_Relationship"/>
+                    <End EntitySet="RelationshipCollection" Role="ToRole_Account_To_M_Relationship"/>
+                </AssociationSet>
+                <AssociationSet Name="Account_To_M_Address_AssocSet" Association="ZCRM_BUPA_ODATA_EM_SRV_02.Account_To_M_Address" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="AccountCollection" Role="FromRole_Account_To_M_Address"/>
+                    <End EntitySet="AddressCollection" Role="ToRole_Account_To_M_Address"/>
+                </AssociationSet>
+                <AssociationSet Name="Contact_To_0_Attachment_AssocSet" Association="ZCRM_BUPA_ODATA_EM_SRV_02.Contact_To_0_Attachment" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="ContactCollection" Role="FromRole_Contact_To_0_Attachment"/>
+                    <End EntitySet="AttachmentCollection" Role="ToRole_Contact_To_0_Attachment"/>
+                </AssociationSet>
+                <AssociationSet Name="AccountFactsheet_To_M_Opportunity_AssocS" Association="ZCRM_BUPA_ODATA_EM_SRV_02.AccountFactsheet_To_M_Opportunity" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="AccountFactsheetCollection" Role="FromRole_AccountFactsheet_To_M_Opportunity"/>
+                    <End EntitySet="OpportunityCollection" Role="ToRole_AccountFactsheet_To_M_Opportunity"/>
+                </AssociationSet>
+                <AssociationSet Name="Employee_To_0_Attachment_AssocSet" Association="ZCRM_BUPA_ODATA_EM_SRV_02.Employee_To_0_Attachment" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="EmployeeCollection" Role="FromRole_Employee_To_0_Attachment"/>
+                    <End EntitySet="AttachmentCollection" Role="ToRole_Employee_To_0_Attachment"/>
+                </AssociationSet>
+                <AssociationSet Name="Account_To_M_Opportunity_AssocSet" Association="ZCRM_BUPA_ODATA_EM_SRV_02.Account_To_M_Opportunity" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="AccountCollection" Role="FromRole_Account_To_M_Opportunity"/>
+                    <End EntitySet="OpportunityCollection" Role="ToRole_Account_To_M_Opportunity"/>
+                </AssociationSet>
+                <AssociationSet Name="Account_To_0_Classification_AssocSet" Association="ZCRM_BUPA_ODATA_EM_SRV_02.Account_To_0_Classification" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="AccountCollection" Role="FromRole_Account_To_0_Classification"/>
+                    <End EntitySet="ClassificationCollection" Role="ToRole_Account_To_0_Classification"/>
+                </AssociationSet>
+                <AssociationSet Name="AccountFactsheet_To_M_Attachment_AssocSe" Association="ZCRM_BUPA_ODATA_EM_SRV_02.AccountFactsheet_To_M_Attachment" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="AccountFactsheetCollection" Role="FromRole_AccountFactsheet_To_M_Attachment"/>
+                    <End EntitySet="AttachmentCollection" Role="ToRole_AccountFactsheet_To_M_Attachment"/>
+                </AssociationSet>
+                <AssociationSet Name="Account_To_0_Address_AssocSet" Association="ZCRM_BUPA_ODATA_EM_SRV_02.Account_To_0_Address" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="AccountCollection" Role="FromRole_Account_To_0_Address"/>
+                    <End EntitySet="AddressCollection" Role="ToRole_Account_To_0_Address"/>
+                </AssociationSet>
+                <AssociationSet Name="Opportunity_To_0_Contact_AssocSet" Association="ZCRM_BUPA_ODATA_EM_SRV_02.Opportunity_To_0_Contact" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="OpportunityCollection" Role="FromRole_Opportunity_To_0_Contact"/>
+                    <End EntitySet="ContactCollection" Role="ToRole_Opportunity_To_0_Contact"/>
+                </AssociationSet>
+                <AssociationSet Name="ZAccount_To_M_Cust_AccountTypeSet" Association="ZCRM_BUPA_ODATA_EM_SRV_02.ZAccount_To_M_Cust_AccountType" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="AccountCollection" Role="FromRole_ZAccount_To_M_Cust_AccountType"/>
+                    <End EntitySet="ZCustomizingAccountTypeCollection" Role="ToRole_ZAccount_To_M_Cust_AccountType"/>
+                </AssociationSet>
+                <AssociationSet Name="Account_To_M_Lead_AssocSet" Association="ZCRM_BUPA_ODATA_EM_SRV_02.Account_To_M_Lead" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="AccountCollection" Role="FromRole_Account_To_M_Lead"/>
+                    <End EntitySet="LeadCollection" Role="ToRole_Account_To_M_Lead"/>
+                </AssociationSet>
+                <AssociationSet Name="Account_To_M_Appointment_AssocSet" Association="ZCRM_BUPA_ODATA_EM_SRV_02.Account_To_M_Appointment" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="AccountCollection" Role="FromRole_Account_To_M_Appointment"/>
+                    <End EntitySet="AppointmentCollection" Role="ToRole_Account_To_M_Appointment"/>
+                </AssociationSet>
+                <AssociationSet Name="ZAccount_To_M_ModulesSet" Association="ZCRM_BUPA_ODATA_EM_SRV_02.ZAccount_To_M_Modules" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="AccountCollection" Role="FromRole_ZAccount_To_M_Modules"/>
+                    <End EntitySet="ZModuleSet" Role="ToRole_ZAccount_To_M_Modules"/>
+                </AssociationSet>
+                <AssociationSet Name="AccountFactsheet_To_M_Task_AssocSet" Association="ZCRM_BUPA_ODATA_EM_SRV_02.AccountFactsheet_To_M_Task" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="AccountFactsheetCollection" Role="FromRole_AccountFactsheet_To_M_Task"/>
+                    <End EntitySet="TaskCollection" Role="ToRole_AccountFactsheet_To_M_Task"/>
+                </AssociationSet>
+                <AssociationSet Name="Account_To_M_Contact_AssocSet" Association="ZCRM_BUPA_ODATA_EM_SRV_02.Account_To_M_Contact" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="AccountCollection" Role="FromRole_Account_To_M_Contact"/>
+                    <End EntitySet="ContactCollection" Role="ToRole_Account_To_M_Contact"/>
+                </AssociationSet>
+                <AssociationSet Name="ZAccount_To_0_Cust_AccStatus_AssocSet" Association="ZCRM_BUPA_ODATA_EM_SRV_02.ZAccount_To_0_Cust_AccStatus" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="AccountCollection" Role="FromRole_ZAccount_To_0_Cust_AccStatus"/>
+                    <End EntitySet="ZCustomizingAccStatusCollection" Role="ToRole_ZAccount_To_0_Cust_AccStatus"/>
+                </AssociationSet>
+                <AssociationSet Name="Contact_To_M_Attachment_AssocSet" Association="ZCRM_BUPA_ODATA_EM_SRV_02.Contact_To_M_Attachment" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="ContactCollection" Role="FromRole_Contact_To_M_Attachment"/>
+                    <End EntitySet="AttachmentCollection" Role="ToRole_Contact_To_M_Attachment"/>
+                </AssociationSet>
+                <AssociationSet Name="ZAccount_To_0_CustomFieldsCollection" Association="ZCRM_BUPA_ODATA_EM_SRV_02.ZAccount_To_0_CustomFields" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="AccountCollection" Role="FromRole_ZAccount_To_0_CustomFields"/>
+                    <End EntitySet="ZCustomFieldsCollection" Role="ToRole_ZAccount_To_0_CustomFields"/>
+                </AssociationSet>
+                <AssociationSet Name="ZAccount_To_M_DepartmentsSet" Association="ZCRM_BUPA_ODATA_EM_SRV_02.ZAccount_To_M_Departments" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="AccountCollection" Role="FromRole_ZAccount_To_M_Departments"/>
+                    <End EntitySet="ZDepartmentSet" Role="ToRole_ZAccount_To_M_Departments"/>
+                </AssociationSet>
+                <AssociationSet Name="Account_To_0_Contact_AssocSet" Association="ZCRM_BUPA_ODATA_EM_SRV_02.Account_To_0_Contact" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="AccountCollection" Role="FromRole_Account_To_0_Contact"/>
+                    <End EntitySet="ContactCollection" Role="ToRole_Account_To_0_Contact"/>
+                </AssociationSet>
+                <AssociationSet Name="Account_To_1_AccountFactsheet_AssocSet" Association="ZCRM_BUPA_ODATA_EM_SRV_02.Account_To_1_AccountFactsheet" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="AccountCollection" Role="FromRole_Account_To_1_AccountFactsheet"/>
+                    <End EntitySet="AccountFactsheetCollection" Role="ToRole_Account_To_1_AccountFactsheet"/>
+                </AssociationSet>
+                <AssociationSet Name="Employee_To_0_Account_AssocSet" Association="ZCRM_BUPA_ODATA_EM_SRV_02.Employee_To_0_Account" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="EmployeeCollection" Role="FromRole_Employee_To_0_Account"/>
+                    <End EntitySet="AccountCollection" Role="ToRole_Employee_To_0_Account"/>
+                </AssociationSet>
+                <AssociationSet Name="Account_To_M_Note_AssocSet" Association="ZCRM_BUPA_ODATA_EM_SRV_02.Account_To_M_Note" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="AccountCollection" Role="FromRole_Account_To_M_Note"/>
+                    <End EntitySet="NoteCollection" Role="ToRole_Account_To_M_Note"/>
+                </AssociationSet>
+                <AssociationSet Name="Contact_To_M_Note_AssocSet" Association="ZCRM_BUPA_ODATA_EM_SRV_02.Contact_To_M_Note" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="ContactCollection" Role="FromRole_Contact_To_M_Note"/>
+                    <End EntitySet="NoteCollection" Role="ToRole_Contact_To_M_Note"/>
+                </AssociationSet>
+                <AssociationSet Name="Contact_To_0_Address_AssocSet" Association="ZCRM_BUPA_ODATA_EM_SRV_02.Contact_To_0_Address" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="ContactCollection" Role="FromRole_Contact_To_0_Address"/>
+                    <End EntitySet="AddressCollection" Role="ToRole_Contact_To_0_Address"/>
+                </AssociationSet>
+                <AssociationSet Name="ZAccount_To_M_Cust_AccStatusSet" Association="ZCRM_BUPA_ODATA_EM_SRV_02.ZAccount_To_M_Cust_AccStatus" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="AccountCollection" Role="FromRole_ZAccount_To_M_Cust_AccStatus"/>
+                    <End EntitySet="ZCustomizingAccStatusCollection" Role="ToRole_ZAccount_To_M_Cust_AccStatus"/>
+                </AssociationSet>
+                <AssociationSet Name="Account_To_M_Attachment_AssocSet" Association="ZCRM_BUPA_ODATA_EM_SRV_02.Account_To_M_Attachment" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="AccountCollection" Role="FromRole_Account_To_M_Attachment"/>
+                    <End EntitySet="AttachmentCollection" Role="ToRole_Account_To_M_Attachment"/>
+                </AssociationSet>
+                <AssociationSet Name="Account_To_0_Relationship_AssocSet" Association="ZCRM_BUPA_ODATA_EM_SRV_02.Account_To_0_Relationship" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="AccountCollection" Role="FromRole_Account_To_0_Relationship"/>
+                    <End EntitySet="RelationshipCollection" Role="ToRole_Account_To_0_Relationship"/>
+                </AssociationSet>
+                <AssociationSet Name="ZAccount_To_M_Cust_SubtypeSet" Association="ZCRM_BUPA_ODATA_EM_SRV_02.ZAccount_To_M_Cust_Subtype" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="AccountCollection" Role="FromRole_ZAccount_To_M_Cust_Subtype"/>
+                    <End EntitySet="ZCustomizingSubtypeCollection" Role="ToRole_ZAccount_To_M_Cust_Subtype"/>
+                </AssociationSet>
+                <AssociationSet Name="Account_To_0_Customer_AssocSet" Association="ZCRM_BUPA_ODATA_EM_SRV_02.Account_To_0_Customer" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="AccountCollection" Role="FromRole_Account_To_0_Customer"/>
+                    <End EntitySet="CustomerCollection" Role="ToRole_Account_To_0_Customer"/>
+                </AssociationSet>
+                <AssociationSet Name="Account_To_0_Attachment_AssocSet" Association="ZCRM_BUPA_ODATA_EM_SRV_02.Account_To_0_Attachment" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="AccountCollection" Role="FromRole_Account_To_0_Attachment"/>
+                    <End EntitySet="AttachmentCollection" Role="ToRole_Account_To_0_Attachment"/>
+                </AssociationSet>
+                <AssociationSet Name="Account_To_M_MarketingAttribute_AssocSet" Association="ZCRM_BUPA_ODATA_EM_SRV_02.Account_To_M_MarketingAttribute" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="AccountCollection" Role="FromRole_Account_To_M_MarketingAttribute"/>
+                    <End EntitySet="MarketingAttributeCollection" Role="ToRole_Account_To_M_MarketingAttribute"/>
+                </AssociationSet>
+                <AssociationSet Name="Employee_To_0_Address_AssocSet" Association="ZCRM_BUPA_ODATA_EM_SRV_02.Employee_To_0_Address" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="EmployeeCollection" Role="FromRole_Employee_To_0_Address"/>
+                    <End EntitySet="AddressCollection" Role="ToRole_Employee_To_0_Address"/>
+                </AssociationSet>
+                <AssociationSet Name="AccountFactsheet_To_M_Lead_AssocSet" Association="ZCRM_BUPA_ODATA_EM_SRV_02.AccountFactsheet_To_M_Lead" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="AccountFactsheetCollection" Role="FromRole_AccountFactsheet_To_M_Lead"/>
+                    <End EntitySet="LeadCollection" Role="ToRole_AccountFactsheet_To_M_Lead"/>
+                </AssociationSet>
+                <AssociationSet Name="Lead_To_0_Employee_AssocSet" Association="ZCRM_BUPA_ODATA_EM_SRV_02.Lead_To_0_Employee" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="LeadCollection" Role="FromRole_Lead_To_0_Employee"/>
+                    <End EntitySet="EmployeeCollection" Role="ToRole_Lead_To_0_Employee"/>
+                </AssociationSet>
+                <AssociationSet Name="ZAccount_To_M_Cust_ThirdtypeSet" Association="ZCRM_BUPA_ODATA_EM_SRV_02.ZAccount_To_M_Cust_Thirdtype" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="AccountCollection" Role="FromRole_ZAccount_To_M_Cust_Thirdtype"/>
+                    <End EntitySet="ZCustomizingThirdTypeCollection" Role="ToRole_ZAccount_To_M_Cust_Thirdtype"/>
+                </AssociationSet>
+                <AssociationSet Name="AccountFactsheet_To_M_Contact_AssocSet" Association="ZCRM_BUPA_ODATA_EM_SRV_02.AccountFactsheet_To_M_Contact" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="AccountFactsheetCollection" Role="FromRole_AccountFactsheet_To_M_Contact"/>
+                    <End EntitySet="ContactCollection" Role="ToRole_AccountFactsheet_To_M_Contact"/>
+                </AssociationSet>
+                <FunctionImport Name="AcademicTitleCustomizing" ReturnType="Collection(ZCRM_BUPA_ODATA_EM_SRV_02.custAcaTitle)" m:HttpMethod="GET"/>
+                <FunctionImport Name="TitleCustomizing" ReturnType="Collection(ZCRM_BUPA_ODATA_EM_SRV_02.custTitle)" m:HttpMethod="GET">
+                    <Parameter Name="category" Type="Edm.String" Mode="In" MaxLength="1" Nullable="true"/>
+                </FunctionImport>
+                <FunctionImport Name="CountryCustomizing" ReturnType="Collection(ZCRM_BUPA_ODATA_EM_SRV_02.custCountry)" m:HttpMethod="GET"/>
+                <FunctionImport Name="RegionCustomizing" ReturnType="Collection(ZCRM_BUPA_ODATA_EM_SRV_02.custRegion)" m:HttpMethod="GET">
+                    <Parameter Name="countryID" Type="Edm.String" Mode="In" MaxLength="3"/>
+                </FunctionImport>
+                <FunctionImport Name="RatingCustomizing" ReturnType="Collection(ZCRM_BUPA_ODATA_EM_SRV_02.custRating)" m:HttpMethod="GET"/>
+                <FunctionImport Name="DefaultEmployeeResponsible" ReturnType="ZCRM_BUPA_ODATA_EM_SRV_02.Employee" EntitySet="EmployeeCollection" m:HttpMethod="GET"/>
+                <FunctionImport Name="EditAuthorizationCheck" ReturnType="ZCRM_BUPA_ODATA_EM_SRV_02.ActionResult" m:HttpMethod="GET">
+                    <Parameter Name="ObjectID" Type="Edm.String" Mode="In"/>
+                </FunctionImport>
+                <FunctionImport Name="ValidPartnerForSample" ReturnType="ZCRM_BUPA_ODATA_EM_SRV_02.ActionResult" m:HttpMethod="GET">
+                    <Parameter Name="PARTNER" Type="Edm.String" Mode="In"/>
+                </FunctionImport>
+            </EntityContainer>
+            <atom:link
+                xmlns:atom="http://www.w3.org/2005/Atom" rel="self" href="http://sprgts:8888/sap/opu/odata/sap/ZCRM_BUPA_ODATA_EM_SRV/$metadata"/>
+                <atom:link
+                    xmlns:atom="http://www.w3.org/2005/Atom" rel="latest-version" href="http://sprgts:8888/sap/opu/odata/sap/ZCRM_BUPA_ODATA_EM_SRV/$metadata"/>
+                </Schema>
+            </edmx:DataServices>
+        </edmx:Edmx>

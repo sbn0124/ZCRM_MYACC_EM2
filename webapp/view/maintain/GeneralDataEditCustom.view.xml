@@ -1,0 +1,112 @@
+<!--
+
+    Copyright (C) 2009-2014 SAP SE or an SAP affiliate company. All rights reserved
+
+-->
+<core:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:layout="sap.ui.layout" xmlns:form="sap.ui.layout.form"
+	controllerName="cus.crm.myaccounts.view.maintain.GeneralDataEdit" xmlns:html="http://www.w3.org/1999/xhtml" id="editView">
+	<Page showNavButton="true">
+		<content>
+			<layout:Grid defaultSpan="L12 M12 S12" width="auto">
+				<layout:content>
+					<!-- Extends the view by a form -->
+					<core:ExtensionPoint name="extEditForm">
+						<form:Form class="sapUiFormEdit sapUiFormEdit-CTX">
+							<form:layout>
+								<form:ResponsiveGridLayout xmlns:form="sap.ui.layout.form" labelSpanL="4" labelSpanM="4" emptySpanL="3" emptySpanM="2" columnsL="1"
+									columnsM="1" class="editableForm"></form:ResponsiveGridLayout>
+							</form:layout>
+							<form:formContainers>
+								<form:FormContainer/>
+								<!-- Extends the form at the top -->
+								<core:ExtensionPoint name="extEditFormTop"/>
+								<form:FormContainer id="editFormCompany" title="{i18n>GENERAL_DATA}"
+									visible="{parts:['category', 'constants>/accountCategoryPerson'], formatter: 'cus.crm.myaccounts.util.formatter.isUnequal'}">
+									<form:formElements >
+										<core:Fragment id="companyFragment" fragmentName="cus.crm.myaccounts.view.maintain.GeneralDataEditCompany" type="XML"/>
+									</form:formElements>
+								</form:FormContainer>
+								<form:FormContainer id="editFormPerson" title="{i18n>GENERAL_DATA}"
+									visible="{parts:['category', 'constants>/accountCategoryPerson'], formatter: 'cus.crm.myaccounts.util.formatter.isEqual'}">
+									<form:formElements >
+										<!-- cus.crm.myaccounts.view.maintain.GeneralDataEditPerson >>>> cus.crm.myaccounts.ZCRM_MYACC_EM2.view.maintain.GeneralDataEditPersonCustom -->
+										<core:Fragment id="personFragment" fragmentName="cus.crm.myaccounts.ZCRM_MYACC_EM2.view.maintain.GeneralDataEditPersonCustom" type="XML"/>
+									</form:formElements>
+								</form:FormContainer>
+<!--								<form:FormContainer id="editFormRating">
+									<form:formElements >
+										<form:FormElement id="Classification.ratingID">
+											<form:label>
+												<Label text="{i18n>RATING}" id="Classification.ratingIDLabel" width="100%"/>
+											</form:label>
+											<form:fields>
+												<Select value="{Classification/ratingID}" maxLength="40" id="Classification.ratingIDInput" change="onInputFieldChanged"
+													items="{Customizing>/RatingCustomizing}" selectedKey="{Classification/ratingID}">
+													<core:Item key="{Customizing>ratingID}" text="{Customizing>ratingText}"/>
+												</Select>
+											</form:fields>
+										</form:FormElement>
+									</form:formElements>
+								</form:FormContainer>-->
+								<form:FormContainer id="editFormEmployee">
+									<form:formElements>
+										<form:FormElement id="EmployeeResponsibleRel.employee">
+											<form:label>
+												<Label text="{i18n>EMPLOYEE_RESPONSIBLE}" id="EmployeeResponsibleRel.employeeLabel" width="100%" visible="true"/>
+											</form:label>
+											<form:fields>
+												<Input id="EmployeeResponsibleRel.account2FullNameInput" value="{EmployeeResponsibleRel/account2FullName}" type="Text" placeholder=""
+													enabled="true" editable="true" showValueHelp="true" valueHelpOnly="false" valueHelpRequest="onEmployeeResponsibleValueHelpSelected"
+													showSuggestion="true" suggestionItemSelected="onEmployeeResponsibleSuggestItemSelected" liveChange="onEmployeeResponsibleInputFieldChanged"
+													visible="true"/>
+											</form:fields>
+										</form:FormElement>
+										<form:FormElement id="EmployeeResponsibleRel.account2ID">
+											<form:fields>
+												<Input id="EmployeeResponsibleRel.account2IDInput" value="{EmployeeResponsibleRel/account2ID}" type="Text" visible="false"/>
+											</form:fields>
+										</form:FormElement>
+									</form:formElements>
+								</form:FormContainer>
+								<!-- Extends the form in the middle -->
+								<core:ExtensionPoint name="extEditFormMiddle"/>
+							</form:formContainers>
+						</form:Form>
+						<form:Form class="sapUiFormEdit sapUiFormEdit-CTX">
+							<form:layout>
+								<form:ResponsiveGridLayout xmlns:form="sap.ui.layout.form" labelSpanL="4" labelSpanM="4" emptySpanL="3" emptySpanM="2" columnsL="1"
+									columnsM="1" class="editableForm"></form:ResponsiveGridLayout>
+							</form:layout>
+							<form:formContainers>
+								<form:FormContainer title="{i18n>ADDRESS}" id="editFormAddress" visible="false">
+									<form:formElements>
+										<core:Fragment id="addressFragment" fragmentName="cus.crm.myaccounts.ZCRM_MYACC_EM2.view.maintain.address.DefaultAddress" type="XML"/>
+										<!-- Extends the address block in the form -->
+										<core:ExtensionPoint name="extEditFormAddress"/>
+									</form:formElements>
+								</form:FormContainer>
+								<form:FormContainer title="{i18n>ADDRESS}" id="editFormAddressUS" visible="false">
+									<form:formElements>
+										<core:Fragment id="addressFragmentUS" fragmentName="cus.crm.myaccounts.ZCRM_MYACC_EM2.view.maintain.address.USAddress" type="XML"/>
+									</form:formElements>
+								</form:FormContainer>
+								<form:FormContainer title="{i18n>ADDRESS}" id="editFormAddressJP" visible="false">
+									<form:formElements>
+										<core:Fragment id="addressFragmentJP" fragmentName="cus.crm.myaccounts.ZCRM_MYACC_EM2.view.maintain.address.JPAddress" type="XML"/>
+									</form:formElements>
+								</form:FormContainer>
+								<form:FormContainer title="{i18n>ADDRESS}" id="editFormAddressGB" visible="false">
+									<form:formElements>
+										<core:Fragment id="addressFragmentGB" fragmentName="cus.crm.myaccounts.ZCRM_MYACC_EM2.view.maintain.address.GBAddress" type="XML"/>
+									</form:formElements>
+								</form:FormContainer>
+								<!-- Extends the form at the bottom -->
+								<core:ExtensionPoint name="extEditFormBottom"/>
+							</form:formContainers>
+						</form:Form>
+					</core:ExtensionPoint>
+				</layout:content>
+			</layout:Grid>
+		</content>
+	</Page>
+</core:View>

@@ -1,0 +1,25 @@
+<!--
+
+    CUSTOM DEVELOPMENT
+
+-->
+<core:FragmentDefinition
+  xmlns="sap.m"
+  xmlns:core="sap.ui.core"
+  xmlns:layout="sap.ui.layout"
+  xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+  
+  <SelectDialog
+  	title="{i18n>ZACCOUNT_TYPE}"
+    class="sapUiPopupWithPadding"
+    items="{AccountTypeModel>/results}"    
+    liveChange="onAccountTypeValueHelpSearch"
+    confirm="onAccountTypeValueHelpClose"
+    cancel="onAccountTypeValueHelpCancel">
+    <StandardListItem
+      title="{AccountTypeModel>zdescription}"
+      app:key="{AccountTypeModel>ztypeID}"
+      />
+  </SelectDialog>
+   
+</core:FragmentDefinition>

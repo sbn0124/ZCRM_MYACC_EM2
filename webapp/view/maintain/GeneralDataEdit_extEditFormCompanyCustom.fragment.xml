@@ -1,0 +1,11 @@
+<core:FragmentDefinition xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:layout="sap.ui.layout"
+	xmlns:form="sap.ui.layout.form" xmlns:html="http://www.w3.org/1999/xhtml">
+	<form:FormElement id="name3" visible="{parts:['category', 'constants>/accountCategoryPerson'], formatter: 'cus.crm.myaccounts.util.formatter.isUnequal'}">
+		<form:label>
+			<Label text="{i18n>COMPANY_NAME3}" id="name3Label" width="100%" />
+		</form:label>
+		<form:fields>
+			<Input value="{name3}" maxLength="40" id="name3Input" liveChange="onName3InputFieldChanged"/>
+		</form:fields>
+	</form:FormElement>
+</core:FragmentDefinition>

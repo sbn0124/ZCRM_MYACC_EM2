@@ -1,0 +1,117 @@
+<!--
+
+    Copyright (C) 2009-2014 SAP SE or an SAP affiliate company. All rights reserved
+
+-->
+<core:View xmlns:core="sap.ui.core" xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc" xmlns:form="sap.ui.layout.form" xmlns:layout="sap.ui.layout"
+	controllerName="cus.crm.myaccounts.view.overview.GeneralData" xmlns:html="http://www.w3.org/1999/xhtml">
+	<Panel>
+		<content>
+			<layout:Grid defaultSpan="L12 M12 S12" width="auto">
+				<layout:content>
+					<!-- Extends the view by a form -->
+					<core:ExtensionPoint name="extDisplayForm">
+						<form:Form id="form" maxContainerCols="2" editable="false">
+							<form:layout>
+								<form:ResponsiveGridLayout labelSpanL="4" labelSpanM="4" emptySpanL="3" emptySpanM="2" columnsL="1" columnsM="1"></form:ResponsiveGridLayout>
+							</form:layout>
+							<form:formContainers>
+								<!-- Extends the form at the top -->
+								<core:ExtensionPoint name="extDisplayFormTop"/>
+								<form:FormContainer id="formCompany"
+									visible="{parts:['category', 'constants>/accountCategoryPerson'], formatter: 'cus.crm.myaccounts.util.formatter.isUnequal'}">
+									<form:formElements >
+										<core:Fragment id="companyFragment" fragmentName="cus.crm.myaccounts.view.overview.GeneralDataCompany" type="XML"/>
+									</form:formElements>
+								</form:FormContainer>
+								<form:FormContainer id="formPerson"
+									visible="{parts:['category', 'constants>/accountCategoryPerson'], formatter: 'cus.crm.myaccounts.util.formatter.isEqual'}">
+									<form:formElements >
+										<core:Fragment id="personFragment" fragmentName="cus.crm.myaccounts.view.overview.GeneralDataPerson" type="XML"/>
+									</form:formElements>
+								</form:FormContainer>
+								<!-- Extends the form in the middle -->
+								<core:ExtensionPoint name="extDisplayFormMiddle"/>
+								<form:FormContainer id="formAddress">
+									<form:formElements>
+										<!-- Address -->
+										<form:FormElement id="mobilePhone"
+											visible="{parts:['category', 'constants>/accountCategoryPerson'], formatter: 'cus.crm.myaccounts.util.formatter.isEqual'}">
+											<form:label>
+												<Label id="mobilePhoneLabel" text="{i18n>MOBILE}"/>
+											</form:label>
+											<form:fields>
+												<Link id="mobilePhoneText" text="{MainAddress/mobilePhone}" press="onPhoneTaped"/>
+											</form:fields>
+										</form:FormElement>
+										<form:FormElement id="phone">
+											<form:label>
+												<Label id="phoneLabel" text="{i18n>PHONE}"/>
+											</form:label>
+											<form:fields>
+												<Link id="phoneText" text="{MainAddress/phone}" press="onPhoneTaped"/>
+											</form:fields>
+										</form:FormElement>
+										<form:FormElement id="email">
+											<form:label>
+												<Label id="emailLabel" text="{i18n>EMAIL}"/>
+											</form:label>
+											<form:fields>
+												<Link id="emailText" text="{MainAddress/email}" press="onEmailTaped"/>
+											</form:fields>
+										</form:FormElement>
+										<form:FormElement id="webSite">
+											<form:label>
+												<Label id="webSiteLabel" text="{i18n>WEBSITE}"/>
+											</form:label>
+											<form:fields>
+												<Link id="webSiteText" href="{path:'MainAddress/website', formatter:'cus.crm.myaccounts.util.formatter.websiteURL'}" target="_blank"
+													text="{MainAddress/website}"/>
+											</form:fields>
+										</form:FormElement>
+										<form:FormElement id="address">
+											<form:label>
+												<Label id="addressLabel" text="{i18n>ADDRESS}"/>
+											</form:label>
+											<form:fields>
+												<layout:HorizontalLayout>
+													<Text id="addressText" text="{MainAddress/address}"/>
+													<layout:HorizontalLayout id="mapIcon" visible="false">
+														<core:Icon src="sap-icon://map" press="onMapIconPressed" size="1.2rem" class="cusMyAccountsPaddingLeft"
+															visible="{parts:['MainAddress/address'], formatter: 'cus.crm.myaccounts.util.formatter.isNotInitial'}"/>
+													</layout:HorizontalLayout>
+												</layout:HorizontalLayout>
+											</form:fields>
+										</form:FormElement>
+										<!-- Extends the address block in the form -->
+										<core:ExtensionPoint name="extDisplayFormAddress"/>
+										<!-- Rating -->
+<!--										<form:FormElement id="rating">
+											<form:label>
+												<Label id="ratingLabel" text="{i18n>RATING}"/>
+											</form:label>
+											<form:fields>
+												<Text id="ratingText" text="{Classification/ratingText}"/>
+											</form:fields>
+										</form:FormElement>-->
+										<!-- Employee Responsible -->
+										<form:FormElement id="employee">
+											<form:label>
+												<Label id="employeeLabel" text="{i18n>EMPLOYEE_RESPONSIBLE}"/>
+											</form:label>
+											<form:fields>
+												<Link id="employeeText" text="{EmployeeResponsibleRel/account2FullName}" press="onEmployeeResponsibleLinkPressed"/>
+											</form:fields>
+										</form:FormElement>
+									</form:formElements>
+								</form:FormContainer>
+								<!-- Extends the form at the bottom -->
+								<core:ExtensionPoint name="extDisplayFormBottom"/>
+							</form:formContainers>
+						</form:Form>
+					</core:ExtensionPoint>
+				</layout:content>
+			</layout:Grid>
+		</content>
+	</Panel>
+</core:View>

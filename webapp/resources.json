@@ -1,0 +1,207 @@
+{
+    "resources": [
+        {
+            "name": "Component.js"
+        },
+        {
+            "name": "index.html"
+        },
+        {
+            "name": "style.css"
+        },
+        {
+            "name": "view/maintain/GeneralDataEdit_extEditFormAddressCustom.fragment.xml"
+        },
+        {
+            "name": "view/maintain/GeneralDataEdit_extEditFormMiddleCustom.fragment.xml"
+        },
+        {
+            "name": "view/maintain/GeneralDataEdit_extEditFormCompanyCustom.fragment.xml"
+        },          
+        {
+            "name": "view/maintain/ValueHelpTerritory.fragment.xml"
+        },
+        {
+            "name": "view/maintain/ValueHelpAccount3Type.fragment.xml"
+        },
+        {
+            "name": "view/maintain/ValueHelpAccountSubtype.fragment.xml"
+        },
+        {
+            "name": "view/maintain/ValueHelpAccountType.fragment.xml"
+        },
+        {
+            "name": "view/maintain/ValueHelpDepartment.fragment.xml"
+        },
+        {
+            "name": "view/maintain/GeneralDataEditCustom.controller.js"
+        },
+        {
+            "name": "view/search/SearchResultCustom.controller.js"
+        },
+        {
+            "name": "view/overview/DepartmentsCustom.controller.js"
+        },
+        {
+            "name": "view/overview/GeneralData_extDisplayFormAddressCustom.fragment.xml"
+        },
+        {
+            "name": "view/overview/OpportunitiesCustom.view.xml"
+        },
+        {
+            "name": "view/overview/OverviewPageCustom.controller.js"
+        },
+        {
+            "name": "view/overview/NotesCustom.controller.js"
+        },
+        {
+            "name": "view/overview/ModulesCustom.view.xml"
+        },
+        {
+            "name": "view/overview/AppointmentsCustom.controller.js"
+        },
+        {
+            "name": "view/overview/OpportunitiesCustom.controller.js"
+        },
+        {
+            "name": "view/overview/MarketingAttributesCustom.controller.js"
+        },
+        {
+            "name": "view/overview/ZAccountSelectDialog.fragment.xml"
+        },
+        {
+            "name": "view/overview/ModulesCustom.controller.js"
+        },
+        {
+            "name": "view/overview/DepartmentsCustom.view.xml"
+        },
+        {
+            "name": "view/overview/GeneralData_extDisplayFormMiddleCustom.fragment.xml"
+        },
+        {
+            "name": "view/overview/AttachmentsCustom.controller.js"
+        },
+        {
+            "name": "view/overview/GeneralDataCustom.controller.js"
+        },
+        {
+            "name": "view/overview/ContactsCustom.controller.js"
+        },
+        {
+            "name": "visual_ext_index.html"
+        },
+        {
+            "name": "util/formatter.js"
+        },
+        {
+            "name": "model/metadata.xml"
+        },
+        {
+            "name": "i18n/i18n_ar.properties",
+            "raw": "i18n/i18n.properties"
+        },
+        {
+            "name": "i18n/i18n_it.properties",
+            "raw": "i18n/i18n.properties"
+        },
+        {
+            "name": "i18n/i18n_iw.properties",
+            "raw": "i18n/i18n.properties"
+        },
+        {
+            "name": "i18n/i18n_pt.properties",
+            "raw": "i18n/i18n.properties"
+        },
+        {
+            "name": "i18n/i18n_en.properties",
+            "raw": "i18n/i18n.properties"
+        },
+        {
+            "name": "i18n/i18n_bg.properties",
+            "raw": "i18n/i18n.properties"
+        },
+        {
+            "name": "i18n/i18n_cs.properties",
+            "raw": "i18n/i18n.properties"
+        },
+        {
+            "name": "i18n/i18n_es.properties",
+            "raw": "i18n/i18n.properties"
+        },
+        {
+            "name": "i18n/i18n_sk.properties",
+            "raw": "i18n/i18n.properties"
+        },
+        {
+            "name": "i18n/i18n_ro.properties",
+            "raw": "i18n/i18n.properties"
+        },
+        {
+            "name": "i18n/i18n_sl.properties",
+            "raw": "i18n/i18n.properties"
+        },
+        {
+            "name": "i18n/i18n.properties",
+            "raw": "i18n/i18n.properties"
+        },
+        {
+            "name": "i18n/i18n_sh.properties",
+            "raw": "i18n/i18n.properties"
+        },
+        {
+            "name": "i18n/i18n_ru.properties",
+            "raw": "i18n/i18n.properties"
+        },
+        {
+            "name": "i18n/i18n_hu.properties",
+            "raw": "i18n/i18n.properties"
+        },
+        {
+            "name": "i18n/i18n_no.properties",
+            "raw": "i18n/i18n.properties"
+        },
+        {
+            "name": "i18n/i18n_tr.properties",
+            "raw": "i18n/i18n.properties"
+        },
+        {
+            "name": "i18n/i18n_zh_CN.properties",
+            "raw": "i18n/i18n.properties"
+        },
+        {
+            "name": "i18n/i18n_pl.properties",
+            "raw": "i18n/i18n.properties"
+        },
+        {
+            "name": "i18n/i18n_de.properties",
+            "raw": "i18n/i18n.properties"
+        },
+        {
+            "name": "i18n/i18n_ja.properties",
+            "raw": "i18n/i18n.properties"
+        },
+        {
+            "name": "i18n/i18n_fr.properties",
+            "raw": "i18n/i18n.properties"
+        },
+        {
+            "name": "i18n/i18n_en_US_saptrc.properties",
+            "raw": "i18n/i18n.properties"
+        },
+        {
+            "name": "i18n/i18n_en_US_sappsd.properties",
+            "raw": "i18n/i18n.properties"
+        },
+        {
+            "name": "i18n/i18n_hr.properties",
+            "raw": "i18n/i18n.properties"
+        },
+        {
+            "name": "Component-preload.js",
+            "merged": true
+        },
+        {
+            "name": "neo-app.json"
+        }
+    ]
+}

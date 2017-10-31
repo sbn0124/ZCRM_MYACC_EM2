@@ -1,0 +1,52 @@
+<!--
+
+    Copyright (C) 2009-2014 SAP SE or an SAP affiliate company. All rights reserved
+
+-->
+<core:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:layout="sap.ui.layout"
+	controllerName="cus.crm.myaccounts.view.overview.Contacts" xmlns:html="http://www.w3.org/1999/xhtml">
+	<Table id="list" mode="{device>/listMode}" growing="true" growingThreshold="10" growingScrollToLoad="false"
+		items="{path:'Contacts', parameters: {expand: 'Photo,WorkAddress,ZCustomFields'}}">
+		<columns>
+			<Column id="fullName" width="16rem" minScreenWidth="Small" demandPopin="true"><Text text="{i18n>NAME}"/></Column>
+			<Column id="department" width="8rem" minScreenWidth="XXLarge" demandPopin="true"><Text text="{i18n>DEPARTMENT}"/></Column>
+			<Column id="mobilePhone" width="9rem" minScreenWidth="Small" demandPopin="true"><Text text="{i18n>MOBILE}"/></Column>
+			<Column id="phone" width="9rem" minScreenWidth="Large" demandPopin="true"><Text text="{i18n>PHONE}"/></Column>
+			<Column id="email" width="13rem" minScreenWidth="Medium" demandPopin="true"><Text text="{i18n>EMAIL}"/></Column>
+			<Column id="actions" width="3rem" minScreenWidth="Desktop" demandPopin="true"><Text text="{i18n>ACTIONS}"/></Column>
+		</columns>
+		<items>
+			<ColumnListItem id="columnListItem">
+				<cells>
+					<layout:Grid class="gridMarginTop" defaultSpan="L3 M3 S6" hSpacing="0" vSpacing="0">
+						<layout:content>
+							<core:Icon src="{path:'Photo/__metadata/media_src', formatter: 'cus.crm.myaccounts.util.formatter.pictureUrlFormatter'}"
+								visible="{parts:[{path:'contactID'}, {path:'Photo/__metadata/media_src'}], formatter:'cus.crm.myaccounts.util.formatter.standardIconVisibilityFormatter'}"
+								size="2.5rem"></core:Icon>
+							<Image src="{path:'Photo/__metadata/media_src', formatter:'cus.crm.myaccounts.util.formatter.pictureUrlFormatter'}"
+								visible="{path:'Photo/__metadata/media_src', formatter:'cus.crm.myaccounts.util.formatter.logoVisibilityFormatter'}" height="2.5rem"
+								width="2.5rem"></Image>
+							<VBox>
+								<items>
+									<Link id="fullNameLink" text="{fullName}" press="onContactLinkClicked"/>
+									<Label id="functionLabel" text="{function}"/>
+								</items>
+								<layoutData>
+									<layout:GridData span="L8 M8 S8"/>
+								</layoutData>
+							</VBox>
+						</layout:content>
+					</layout:Grid> 
+					<Text text="{ZCustomFields/zDepartmentDesc}"/>
+					<Link text="{WorkAddress/mobilePhone}" press="onPhoneClicked"/>
+					<Link text="{WorkAddress/phone}" press="onPhoneClicked"/>
+					<Link text="{WorkAddress/email}" press="onEmailClicked"/>
+					<layout:HorizontalLayout>
+						<core:Icon id="editIcon" src="sap-icon://edit" size="1.3rem" press="onEditContactClicked"/>
+						<core:Icon id="deleteIcon" src="sap-icon://delete" size="1.3rem" press="onDeleteContactClicked" class="cusMyAccountsPaddingLeft"/>
+					</layout:HorizontalLayout>
+				</cells>
+			</ColumnListItem>
+		</items>
+	</Table>
+</core:View>

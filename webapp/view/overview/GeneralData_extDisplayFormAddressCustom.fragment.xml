@@ -1,0 +1,20 @@
+<core:FragmentDefinition xmlns:core="sap.ui.core" xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc" xmlns:form="sap.ui.layout.form"
+	xmlns:layout="sap.ui.layout" xmlns:html="http://www.w3.org/1999/xhtml">
+	<!-- This extension point can be used to add fields to form:formElements -->
+	<form:FormElement xmlns:form="sap.ui.layout.form" id="account_room_form" visible="false'}">
+		<form:label>
+			<Label xmlns="sap.m" id="account_room_label" text="{i18n&gt;ZACCOUNT_ROOM}"/>
+		</form:label>
+		<form:fields>
+			<Text xmlns="sap.m" id="account_room" text="{MainAddress/zRoomNumber}"/>
+		</form:fields>
+	</form:FormElement>
+	<form:FormElement xmlns:form="sap.ui.layout.form" id="account_building_form" visible="false">
+		<form:label>
+			<Label xmlns="sap.m" id="account_building_label" text="{i18n&gt;ZACCOUNT_BUILDING}"/>
+		</form:label>
+		<form:fields>
+			<Text xmlns="sap.m" id="account_building" text="{MainAddress/zBuilding}"/>
+		</form:fields>
+	</form:FormElement>
+</core:FragmentDefinition>
